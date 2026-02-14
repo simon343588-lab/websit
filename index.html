@@ -26,7 +26,7 @@ header {
   top: 0;
   background: white;
   border-bottom: 1px solid #eee;
-  padding: 18px 8%;
+  padding: 20px 8%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -34,14 +34,15 @@ header {
 }
 
 .logo {
-  font-weight: 700;
-  font-size: 18px;
+  font-weight: 800;
+  font-size: 32px;
+  letter-spacing: -1px;
 }
 
 .nav-btn {
   background: #0A2540;
   color: white;
-  padding: 10px 20px;
+  padding: 10px 22px;
   text-decoration: none;
   font-weight: 600;
   font-size: 14px;
@@ -49,11 +50,11 @@ header {
 
 /* ===== SECTIONS ===== */
 section {
-  padding: 100px 8%;
+  padding: 110px 8%;
 }
 
 .hero {
-  padding-top: 150px;
+  padding-top: 180px;
 }
 
 .hero h1 {
@@ -93,12 +94,14 @@ section {
   color: #0A2540;
 }
 
+/* ===== TITLES ===== */
 .section-title {
   font-size: 40px;
   font-weight: 700;
   margin-bottom: 50px;
 }
 
+/* ===== GRID ===== */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -120,6 +123,7 @@ section {
   color: #555;
 }
 
+/* ===== RESULTS ===== */
 .results {
   background: #f9fafc;
 }
@@ -133,32 +137,41 @@ section {
   margin-bottom: 12px;
 }
 
+/* ===== TESTIMONIALS ===== */
 .testimonials {
   background: #f8f9fb;
 }
 
 .testimonial-card {
-  padding: 30px;
-  border-radius: 8px;
   background: white;
-  border: 1px solid #ddd;
+  border: 1px solid #e5e7eb;
+  padding: 30px;
 }
 
 .testimonial-card p {
   font-size: 16px;
-  color: #555;
-  margin-bottom: 15px;
+  color: #444;
+  margin: 15px 0;
+  line-height: 1.6;
 }
 
-.testimonial-card .name {
+.stars {
+  color: #0A2540;
+  font-size: 18px;
+  letter-spacing: 3px;
+}
+
+.name {
   font-weight: 700;
-  font-size: 15px;
+  margin-top: 10px;
 }
 
-.contact {
-  background: #ffffff;
+.role {
+  font-size: 14px;
+  color: #777;
 }
 
+/* ===== CONTACT ===== */
 form {
   max-width: 500px;
 }
@@ -181,7 +194,7 @@ button {
 }
 
 footer {
-  padding: 40px 8%;
+  padding: 50px 8%;
   border-top: 1px solid #eee;
   font-size: 14px;
   color: #777;
@@ -256,35 +269,51 @@ footer {
 
 <!-- TESTIMONIALS -->
 <section class="testimonials">
-  <div class="section-title">What Clients Say</div>
-
+  <div class="section-title">What Our Clients Say</div>
   <div class="grid">
+
     <div class="testimonial-card">
-      <p>"Working with trueleverageai transformed our lead process — instant responses boosted conversions almost overnight."</p>
-      <div class="name">— Growth Lead, SaaS Company</div>
+      <div class="stars">★★★★★</div>
+      <p>
+        "trueleverageai rebuilt our lead generation engine from the ground up. 
+        Our pipeline became consistent within weeks and we stopped relying on manual outreach entirely."
+      </p>
+      <div class="name">Sarah Chen</div>
+      <div class="role">CEO, BrightPath Consulting</div>
     </div>
+
     <div class="testimonial-card">
-      <p>"We saved hours each week and finally saw real movement in our sales pipeline. 3× more booked calls."</p>
-      <div class="name">— Head of Sales, Tech Startup</div>
+      <div class="stars">★★★★★</div>
+      <p>
+        "Their content automation saved our team over 15 hours per week. 
+        Output increased dramatically while maintaining the quality we needed for growth."
+      </p>
+      <div class="name">Emily Watson</div>
+      <div class="role">Marketing Director, NovaTech</div>
     </div>
+
     <div class="testimonial-card">
-      <p>"The AI systems replaced manual follow-ups entirely — our team focuses on closing now."</p>
-      <div class="name">— Operations Lead, Services Firm</div>
+      <div class="stars">★★★★★</div>
+      <p>
+        "The speed-to-lead system completely transformed our sales process. 
+        We went from losing leads daily to booking 3× more calls consistently."
+      </p>
+      <div class="name">Arjun Mehra</div>
+      <div class="role">Founder, Urban Realty Group</div>
     </div>
+
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="contact">
+<section id="contact">
   <div class="section-title">Contact Us</div>
-
   <form action="https://formspree.io/f/yourformid" method="POST">
     <input type="text" name="company" placeholder="Company Name" required>
     <input type="email" name="email" placeholder="Email Address" required>
     <input type="text" name="industry" placeholder="Industry" required>
     <button type="submit">Submit</button>
   </form>
-
   <p style="margin-top:20px;">
     Or call directly: <strong>+1234567890</strong>
   </p>

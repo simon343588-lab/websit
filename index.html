@@ -61,13 +61,13 @@ section {
   font-size: 68px;
   font-weight: 800;
   line-height: 1.05;
-  max-width: 950px;
+  max-width: 900px;
 }
 
 .hero p {
   margin-top: 25px;
   font-size: 20px;
-  max-width: 650px;
+  max-width: 600px;
   color: #444;
 }
 
@@ -94,33 +94,40 @@ section {
   color: #0A2540;
 }
 
-/* ===== TITLES ===== */
+/* ===== SECTION TITLE ===== */
 .section-title {
   font-size: 40px;
   font-weight: 700;
-  margin-bottom: 50px;
+  margin-bottom: 60px;
 }
 
-/* ===== GRID ===== */
-.grid {
+/* ===== SERVICES GRID ===== */
+.services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 40px;
 }
 
-.card {
-  border-top: 3px solid #0A2540;
-  padding-top: 20px;
+.service-card {
+  border: 1px solid #e5e7eb;
+  padding: 35px;
+  border-radius: 6px;
+  transition: 0.2s ease;
 }
 
-.card h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
+.service-card:hover {
+  border-color: #0A2540;
 }
 
-.card p {
+.service-card h3 {
+  font-size: 22px;
+  margin-bottom: 15px;
+}
+
+.service-card p {
   font-size: 16px;
   color: #555;
+  line-height: 1.6;
 }
 
 /* ===== RESULTS ===== */
@@ -148,22 +155,20 @@ section {
   padding: 30px;
 }
 
-.testimonial-card p {
-  font-size: 16px;
-  color: #444;
-  margin: 15px 0;
-  line-height: 1.6;
-}
-
 .stars {
   color: #0A2540;
   font-size: 18px;
   letter-spacing: 3px;
 }
 
+.testimonial-card p {
+  font-size: 16px;
+  color: #444;
+  margin: 15px 0;
+}
+
 .name {
   font-weight: 700;
-  margin-top: 10px;
 }
 
 .role {
@@ -213,12 +218,11 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <h1>
-    Save 15+ Hours Per Week.<br>
-    Book 3× More Calls.<br>
-    Reduce Customer Acquisition Cost by 60%.
+    Stop Doing Repetitive Work.<br>
+    Start Scaling.
   </h1>
   <p>
-    We design and deploy AI-driven revenue systems that eliminate delays across your growth operations.
+    We replace manual operational tasks with AI systems that run 24/7 across your growth pipeline.
   </p>
   <div class="hero-buttons">
     <a href="#contact"><button class="primary-btn">Submit</button></a>
@@ -228,32 +232,53 @@ footer {
 
 <!-- SERVICES -->
 <section>
-  <div class="section-title">Revenue Systems</div>
-  <div class="grid">
-    <div class="card">
-      <h3>Lead Generation Automation</h3>
-      <p>Consistent multi-channel prospecting and pipeline expansion.</p>
+  <div class="section-title">End-to-End AI Automation</div>
+
+  <div class="services-grid">
+
+    <!-- Lead Generation FIRST -->
+    <div class="service-card">
+      <h3>Lead Generation</h3>
+      <p>
+        AI-powered lead capture and nurturing systems that identify high-intent prospects and consistently fill your pipeline.
+      </p>
     </div>
-    <div class="card">
-      <h3>Speed-to-Lead Infrastructure</h3>
-      <p>Instant responses across inbound channels.</p>
+
+    <div class="service-card">
+      <h3>WhatsApp Agents</h3>
+      <p>
+        Automated WhatsApp responders that engage prospects instantly and drive conversions through personalized messaging.
+      </p>
     </div>
-    <div class="card">
-      <h3>WhatsApp Automation</h3>
-      <p>24/7 conversational engagement and qualification.</p>
+
+    <div class="service-card">
+      <h3>AI Chatbots</h3>
+      <p>
+        Custom conversational agents that handle inquiries, qualify leads, and book appointments 24/7.
+      </p>
     </div>
-    <div class="card">
-      <h3>Content Automation</h3>
-      <p>Scale publishing and distribution without operational strain.</p>
+
+    <div class="service-card">
+      <h3>Content & Marketing</h3>
+      <p>
+        Automated content creation and distribution systems powered by AI to maintain consistent visibility.
+      </p>
     </div>
-    <div class="card">
-      <h3>Competitor Intelligence</h3>
-      <p>Live monitoring of positioning, offers, and pricing.</p>
+
+    <div class="service-card">
+      <h3>Speed-to-Lead</h3>
+      <p>
+        Instant response systems that engage new leads within seconds and improve close rates.
+      </p>
     </div>
-    <div class="card">
-      <h3>Recruiting Automation</h3>
-      <p>Automated candidate flow and structured screening.</p>
+
+    <div class="service-card">
+      <h3>Data & Analytics</h3>
+      <p>
+        AI-driven dashboards and reporting that surface insights and help you make faster decisions.
+      </p>
     </div>
+
   </div>
 </section>
 
@@ -270,7 +295,7 @@ footer {
 <!-- TESTIMONIALS -->
 <section class="testimonials">
   <div class="section-title">What Our Clients Say</div>
-  <div class="grid">
+  <div class="services-grid">
 
     <div class="testimonial-card">
       <div class="stars">★★★★★</div>
@@ -320,7 +345,7 @@ footer {
 </section>
 
 <footer>
-  trueleverageai — Revenue Infrastructure. Built to Scale.
+  trueleverageai — Built to Replace Manual Work.
 </footer>
 
 </body>

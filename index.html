@@ -3,188 +3,213 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Revenue Infrastructure | AI Automation</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<title>Revenue Infrastructure</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700;800&display=swap" rel="stylesheet">
+
 <style>
-body {
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
   font-family: 'Inter', sans-serif;
   background: #ffffff;
-  color: #111111;
-  line-height: 1.6;
+  color: #111;
 }
 
-.container {
-  max-width: 1100px;
-  margin: auto;
-  padding: 80px 20px;
+section {
+  padding: 70px 8%;
 }
 
-h1 {
-  font-size: 42px;
-  font-weight: 700;
-  margin-bottom: 20px;
+.hero {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
+.hero h1 {
+  font-size: 64px;
+  font-weight: 800;
+  line-height: 1.1;
+  max-width: 900px;
 }
 
-p {
-  font-size: 18px;
-  color: #555;
+.hero p {
+  margin-top: 25px;
+  font-size: 20px;
+  color: #444;
+  max-width: 650px;
+}
+
+.buttons {
+  margin-top: 35px;
 }
 
 .btn-primary {
-  display: inline-block;
-  padding: 14px 28px;
+  padding: 14px 32px;
   background: #0A2540;
-  color: white;
-  text-decoration: none;
+  color: #fff;
+  border: none;
   font-weight: 600;
-  border-radius: 6px;
+  cursor: pointer;
   margin-right: 15px;
 }
 
 .btn-secondary {
-  display: inline-block;
-  padding: 14px 28px;
+  padding: 14px 32px;
+  background: transparent;
   border: 2px solid #0A2540;
   color: #0A2540;
-  text-decoration: none;
   font-weight: 600;
-  border-radius: 6px;
+  cursor: pointer;
 }
 
-.section {
-  border-bottom: 1px solid #eee;
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 30px;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
-  margin-top: 40px;
 }
 
 .card {
-  padding: 25px;
   border: 1px solid #eee;
-  border-radius: 8px;
+  padding: 25px;
 }
 
-ul {
-  padding-left: 20px;
+.card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
 }
 
-.contact-box {
-  max-width: 600px;
+.card p {
+  font-size: 15px;
+  color: #555;
 }
 
-input, textarea {
+.results ul {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.results li {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.contact {
+  background: #f8f9fb;
+}
+
+form {
+  max-width: 500px;
+}
+
+input {
   width: 100%;
   padding: 14px;
   margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+}
+
+button {
+  padding: 14px 30px;
+  background: #0A2540;
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 footer {
-  text-align: center;
-  padding: 40px 20px;
+  padding: 30px 8%;
   font-size: 14px;
   color: #777;
 }
 </style>
 </head>
+
 <body>
 
 <!-- HERO -->
-<div class="container section">
-  <h1>Save 15+ Hours Per Week.<br>Book 3× More Calls.<br>Cut CAC by 60%.</h1>
-  <p>We build AI-driven revenue systems that capture, qualify, and respond to leads instantly.</p>
-  <a href="#contact" class="btn-primary">Get Your Free Automation Plan</a>
-  <a href="tel:+1234567890" class="btn-secondary">Call Us</a>
-</div>
+<section class="hero">
+  <h1>
+    Save 15+ Hours Per Week.<br>
+    Book 3× More Calls.<br>
+    Reduce Customer Acquisition Cost by 60%.
+  </h1>
+  <p>
+    AI-driven revenue systems that capture, qualify, and respond instantly across your entire growth pipeline.
+  </p>
 
-<!-- PROBLEM -->
-<div class="container section">
-  <h2>Your Growth Isn’t Limited by Leads.<br>It’s Limited by Speed.</h2>
-  <ul>
-    <li>Leads wait hours for replies</li>
-    <li>Manual follow-ups slow down conversions</li>
-    <li>Recruiting pipelines stall</li>
-    <li>Competitor insights arrive too late</li>
-    <li>Content bottlenecks growth</li>
-  </ul>
-</div>
-
-<!-- SOLUTION -->
-<div class="container section">
-  <h2>We Remove the Delay Layer From Your Business</h2>
-  <p>AI systems that operate 24/7 across your revenue pipeline. No hiring. No overhead. Just measurable outcomes.</p>
-</div>
+  <div class="buttons">
+    <a href="#contact"><button class="btn-primary">Submit</button></a>
+    <a href="tel:+1234567890"><button class="btn-secondary">Call Us</button></a>
+  </div>
+</section>
 
 <!-- SERVICES -->
-<div class="container section">
-  <h2>Revenue Acceleration Systems</h2>
+<section>
+  <div class="section-title">Revenue Acceleration Systems</div>
   <div class="grid">
     <div class="card">
       <h3>Lead Generation Automation</h3>
-      <p>Multi-channel prospecting that feeds your pipeline daily.</p>
+      <p>Automated multi-channel prospecting that consistently fills your pipeline.</p>
     </div>
     <div class="card">
       <h3>Speed-to-Lead Engine</h3>
-      <p>Responds to new leads in under 60 seconds.</p>
+      <p>Immediate response to new inquiries across platforms.</p>
     </div>
     <div class="card">
       <h3>WhatsApp Automation</h3>
-      <p>Qualifies and nurtures conversations automatically.</p>
+      <p>24/7 conversational workflows and qualification.</p>
     </div>
     <div class="card">
       <h3>Content Automation</h3>
-      <p>Generate and distribute content at scale.</p>
+      <p>Scale distribution and publishing without manual effort.</p>
     </div>
     <div class="card">
       <h3>Competitor Intelligence</h3>
-      <p>Live monitoring of offers and positioning.</p>
+      <p>Live tracking of positioning, pricing, and offers.</p>
     </div>
     <div class="card">
       <h3>Recruiting Automation</h3>
-      <p>Automated candidate screening and follow-up.</p>
+      <p>Automated candidate screening and follow-up flows.</p>
     </div>
   </div>
-</div>
+</section>
 
 <!-- RESULTS -->
-<div class="container section">
-  <h2>Built for Measurable Growth</h2>
+<section class="results">
+  <div class="section-title">Measurable Outcomes</div>
   <ul>
     <li>Save 15+ hours per week</li>
     <li>Book 3× more sales calls</li>
-    <li>Cut CAC by up to 60%</li>
-    <li>Reduce manual admin work</li>
+    <li>Reduce Customer Acquisition Cost by 60%</li>
   </ul>
-</div>
+</section>
 
 <!-- CONTACT -->
-<div id="contact" class="container section">
-  <h2>Ready to Remove Bottlenecks?</h2>
-  <div class="contact-box">
-    <form action="https://formspree.io/f/yourformid" method="POST">
-      <input type="text" name="name" placeholder="Full Name" required>
-      <input type="text" name="company" placeholder="Company">
-      <input type="email" name="email" placeholder="Email Address" required>
-      <input type="text" name="leads" placeholder="Monthly Lead Volume">
-      <textarea name="message" rows="4" placeholder="Biggest Growth Bottleneck"></textarea>
-      <button type="submit" class="btn-primary">Get My Automation Plan</button>
-    </form>
-    <p style="margin-top:20px;">Or call us directly:</p>
-    <a href="tel:+1234567890" class="btn-secondary">Call Now</a>
-  </div>
-</div>
+<section class="contact" id="contact">
+  <div class="section-title">Get Started</div>
+  <form action="https://formspree.io/f/yourformid" method="POST">
+    <input type="text" name="company" placeholder="Company Name" required>
+    <input type="email" name="email" placeholder="Email Address" required>
+    <input type="text" name="industry" placeholder="Industry" required>
+    <button type="submit">Submit</button>
+  </form>
+  <p style="margin-top:20px;">
+    Or call directly: <strong>+1234567890</strong>
+  </p>
+</section>
 
 <footer>
   Revenue Infrastructure. Built to Scale.

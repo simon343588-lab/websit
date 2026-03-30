@@ -1,283 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zero-API Flashcard Generator</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Advanced Flashcard Generator (No API)</title>
 <style>
-  :root {
-    --bg: #fafafa;
-    --text: #111;
-    --border: #e5e5e5;
-    --accent: #000;
-  }
-  
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  
-  body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    padding: 2rem;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 2rem;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  h1 { font-weight: 600; font-size: 2rem; letter-spacing: -0.02em; }
-  p.subtitle { color: #666; font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5; }
-
-  .container {
-    width: 100%;
-    max-width: 600px;
-    background: #fff;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-  }
-
-  textarea {
-    width: 100%;
-    height: 150px;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    resize: vertical;
-    margin-bottom: 1rem;
-    outline: none;
-  }
-  
-  textarea:focus { border-color: var(--accent); }
-
-  button {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    font-weight: 500;
-    font-size: 0.9rem;
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    transition: opacity 0.2s;
-  }
-  button:hover { opacity: 0.85; }
-
-  /* FLASHCARD UI */
-  #studyArea {
-    display: none;
-    margin-top: 2rem;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  .stats {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.75rem;
-    color: #666;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-
-  .card-scene {
-    width: 100%;
-    height: 250px;
-    perspective: 1000px;
-    margin-bottom: 1.5rem;
-  }
-
-  .card {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
-    transform-style: preserve-3d;
-    cursor: pointer;
-  }
-
-  .card.is-flipped { transform: rotateY(180deg); }
-
-  .card-face {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    text-align: center;
-    border: 2px solid var(--accent);
-    border-radius: 8px;
-    background: #fff;
-    font-size: 1.2rem;
-    line-height: 1.6;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
-  }
-
-  .card-back {
-    transform: rotateY(180deg);
-    background: var(--accent);
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.5rem;
-  }
-
-  .controls {
-    display: flex;
-    gap: 1rem;
-  }
-  
-  .btn-outline {
-    background: transparent;
-    color: var(--accent);
-    border: 1px solid var(--border);
-  }
-  .btn-outline:hover { background: #f5f5f5; color: var(--accent); border-color: var(--accent); }
-
-  .blank { border-bottom: 2px solid var(--accent); color: transparent; padding: 0 2rem; }
+body{font-family:Arial, sans-serif;background:#f5f5f5;margin:0;padding:20px}
+.container{max-width:700px;margin:auto;background:#fff;padding:20px;border-radius:10px}
+textarea{width:100%;height:150px;margin-bottom:10px}
+button{padding:10px;margin:5px 0;width:100%}
+.card{border:1px solid #ddd;padding:20px;margin-top:20px;text-align:center;cursor:pointer}
+.hidden{display:none}
+.stats{display:flex;justify-content:space-between;margin-top:10px}
 </style>
 </head>
-<body>
-
-<header>
-  <h1>Instant Flashcards</h1>
-  <p class="subtitle">Paste your textbook or notes. We auto-generate fill-in-the-blank flashcards running locally in your browser. 100% private. 0 APIs.</p>
-</header>
-
-<div class="container" id="inputArea">
-  <textarea id="rawText" placeholder="Paste your study notes, Wikipedia article, or lecture transcript here...
-  
-(e.g., Mitochondria is the powerhouse of the cell. Photosynthesis converts light into energy.)"></textarea>
-  <button onclick="generateCards()">Generate Deck</button>
+<body><div class="container" id="inputArea">
+<h2>Advanced Flashcard Generator</h2>
+<textarea id="text"></textarea>
+<button onclick="generate()">Generate</button>
+</div><div class="container hidden" id="studyArea">
+<div class="stats">
+<span id="progress"></span>
+<button onclick="reset()">Reset</button>
 </div>
-
-<div id="studyArea">
-  <div class="stats">
-    <span id="cardCount">Card 1 / 10</span>
-    <button class="btn-outline" style="padding: 0.3rem 0.6rem; width: auto; font-size:0.7rem;" onclick="resetApp()">← Back to Editor</button>
-  </div>
-
-  <div class="card-scene" onclick="flipCard()">
-    <div class="card" id="flashcard">
-      <div class="card-face card-front" id="cardFront">Front</div>
-      <div class="card-face card-back" id="cardBack">Back</div>
-    </div>
-  </div>
-
-  <div class="controls">
-    <button class="btn-outline" onclick="prevCard()">Previous</button>
-    <button onclick="nextCard()">Next Card</button>
-  </div>
+<div class="card" onclick="flip()">
+<div id="front"></div>
+<div id="back" class="hidden"></div>
 </div>
+<button onclick="prev()">Prev</button>
+<button onclick="next()">Next</button>
+</div><script>
+let deck=[];let i=0;let flipped=false;
 
-<script>
-  let deck = [];
-  let currentIndex = 0;
+function generate(){
+let text=document.getElementById('text').value;
+let sentences=text.split(/[.!?]/);
+let freq={};
 
-  // Stopwords: Words we DO NOT want to make blanks out of
-  const stopwords = new Set(['about','above','after','again','against','all','and','any','are','aren','because','been','before','being','below','between','both','but','can','cannot','could','did','do','does','doing','down','during','each','few','for','from','further','had','has','have','having','here','how','into','isn','its','itself','more','most','mustn','nor','not','off','once','only','other','ought','our','ours','ourselves','out','over','own','same','shan','she','should','some','such','than','that','the','their','theirs','them','themselves','then','there','these','they','this','those','through','too','under','until','very','was','wasn','were','weren','what','when','where','which','while','who','whom','why','with','would','you','your','yours','yourself','yourselves']);
+// word frequency
+sentences.forEach(s=>{
+let words=s.toLowerCase().match(/\b[a-z]{4,}\b/g)||[];
+words.forEach(w=>freq[w]=(freq[w]||0)+1);
+});
 
-  function generateCards() {
-    const text = document.getElementById('rawText').value;
-    if (!text.trim()) return alert('Paste some text first.');
+// scoring
+sentences.forEach(s=>{
+let words=s.match(/\b[a-zA-Z]{4,}\b/g)||[];
+if(words.length<3)return;
 
-    // Split text into sentences based on punctuation
-    const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
-    deck = [];
+let best=words.sort((a,b)=>(freq[b.toLowerCase()]||0)-(freq[a.toLowerCase()]||0))[0];
+if(!best)return;
 
-    sentences.forEach(sentence => {
-      let cleanSentence = sentence.trim();
-      if (cleanSentence.length < 15) return; // Skip tiny fragments
+let front=s.replace(best,'_____');
 
-      // Extract raw words
-      let words = cleanSentence.match(/\b[a-zA-Z]+\b/g) || [];
-      
-      // Filter for valid candidates (words > 5 letters that aren't stopwords)
-      let candidates = words.filter(w => w.length > 5 && !stopwords.has(w.toLowerCase()));
+// Q/A type
+if(s.toLowerCase().includes('is')){
+let parts=s.split(' is ');
+if(parts.length===2){
+ deck.push({front:'What is '+parts[0]+'?',back:parts[1]});
+}
+}
 
-      if (candidates.length > 0) {
-        // Pick the longest word as the target answer (usually the most important concept)
-        let targetWord = candidates.reduce((a, b) => a.length > b.length ? a : b);
-        
-        // Replace the target word with a blank line in the sentence
-        let regex = new RegExp(`\\b${targetWord}\\b`, 'i');
-        let frontHTML = cleanSentence.replace(regex, `<span class="blank">${targetWord}</span>`);
+// Cloze type
+ deck.push({front:front,back:best});
+});
 
-        deck.push({
-          front: frontHTML,
-          back: targetWord
-        });
-      }
-    });
+// deduplicate
+let seen=new Set();
+deck=deck.filter(c=>{
+let key=c.front+c.back;
+if(seen.has(key))return false;
+seen.add(key);
+return true;
+});
 
-    if (deck.length === 0) {
-      alert("Couldn't find enough complex concepts in that text. Try pasting a paragraph from a textbook.");
-      return;
-    }
+// shuffle
+deck.sort(()=>Math.random()-0.5);
 
-    // Shuffle the deck
-    deck = deck.sort(() => Math.random() - 0.5);
-    
-    currentIndex = 0;
-    document.getElementById('inputArea').style.display = 'none';
-    document.getElementById('studyArea').style.display = 'block';
-    renderCard();
-  }
+if(deck.length===0){alert('No cards');return}
 
-  function renderCard() {
-    const card = document.getElementById('flashcard');
-    card.classList.remove('is-flipped'); // Always show front first
+localStorage.setItem('deck',JSON.stringify(deck));
 
-    setTimeout(() => {
-      document.getElementById('cardFront').innerHTML = deck[currentIndex].front;
-      document.getElementById('cardBack').textContent = deck[currentIndex].back;
-      document.getElementById('cardCount').textContent = `Card ${currentIndex + 1} / ${deck.length}`;
-    }, 150); // Wait for flip animation to clear before changing text
-  }
+document.getElementById('inputArea').classList.add('hidden');
+document.getElementById('studyArea').classList.remove('hidden');
+i=0;render();
+}
 
-  function flipCard() {
-    document.getElementById('flashcard').classList.toggle('is-flipped');
-  }
+function render(){
+flipped=false;
+document.getElementById('front').textContent=deck[i].front;
+document.getElementById('back').textContent=deck[i].back;
+document.getElementById('back').classList.add('hidden');
+document.getElementById('progress').textContent=`${i+1}/${deck.length}`;
+}
 
-  function nextCard() {
-    if (currentIndex < deck.length - 1) {
-      currentIndex++;
-      renderCard();
-    } else {
-      alert("You finished the deck! Time to shuffle and restart.");
-      deck = deck.sort(() => Math.random() - 0.5);
-      currentIndex = 0;
-      renderCard();
-    }
-  }
+function flip(){
+flipped=!flipped;
+document.getElementById('back').classList.toggle('hidden',!flipped);
+}
 
-  function prevCard() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      renderCard();
-    }
-  }
+function next(){if(i<deck.length-1){i++;render()}}
+function prev(){if(i>0){i--;render()}}
 
-  function resetApp() {
-    document.getElementById('inputArea').style.display = 'block';
-    document.getElementById('studyArea').style.display = 'none';
-  }
-</script>
-</body>
+function reset(){
+localStorage.removeItem('deck');
+location.reload();
+}
+
+// load saved
+window.onload=()=>{
+let saved=localStorage.getItem('deck');
+if(saved){deck=JSON.parse(saved);
+document.getElementById('inputArea').classList.add('hidden');
+document.getElementById('studyArea').classList.remove('hidden');
+render();}
+}
+</script></body>
 </html>

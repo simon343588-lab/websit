@@ -1,632 +1,2413 @@
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Business Idea Generator — TrueLeverage AI</title>
-<meta name="description" content="Generate sharp AI business ideas. Free. Instant. No signup.">
-<meta property="og:title" content="AI Business Idea Generator — TrueLeverage AI">
-<meta property="og:description" content="Sharp AI-powered business ideas for builders, solopreneurs, and the slightly unhinged.">
-<meta property="og:url" content="https://trueleverageai.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --black: #000000;
-    --white: #ffffff;
-    --off-white: #f5f5f3;
-    --gray-100: #e8e8e6;
-    --gray-300: #b0b0aa;
-    --gray-500: #6b6b65;
-    --gray-700: #2a2a28;
-    --gray-900: #111110;
-  }
-
-  body {
-    background: var(--white);
-    color: var(--black);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  header {
-    border-bottom: 1px solid var(--gray-100);
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.06em;
-    color: var(--black);
-  }
-
-  .logo span { color: var(--gray-300); }
-
-  .header-link {
-    font-size: 0.75rem;
-    color: var(--gray-500);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    font-family: 'JetBrains Mono', monospace;
-    transition: color 0.2s;
-  }
-  .header-link:hover { color: var(--black); }
-
-  .hero {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem 3rem;
-    text-align: center;
-  }
-
-  .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: up 0.5s ease forwards 0.1s;
-  }
-
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.2rem, 11vw, 7rem);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
-    color: var(--black);
-    margin-bottom: 1.25rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.25s;
-  }
-
-  h1 .line2 {
-    display: block;
-    color: var(--gray-300);
-  }
-
-  .hero-sub {
-    font-size: 0.9rem;
-    color: var(--gray-500);
-    font-weight: 300;
-    line-height: 1.7;
-    max-width: 360px;
-    margin: 0 auto;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.4s;
-  }
-
-  .filter-bar {
-    max-width: 680px;
-    margin: 2.5rem auto 0;
-    padding: 0 1.5rem;
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.5s;
-  }
-
-  .filter-btn {
-    background: transparent;
-    border: 1px solid var(--gray-100);
-    color: var(--gray-500);
-    padding: 0.28rem 0.7rem;
-    border-radius: 2px;
-    font-size: 0.68rem;
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--gray-300);
-    color: var(--black);
-  }
-
-  .filter-btn.active {
-    background: var(--black);
-    border-color: var(--black);
-    color: var(--white);
-  }
-
-  .card-wrap {
-    max-width: 680px;
-    margin: 2rem auto 0;
-    padding: 0 1.5rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.6s;
-  }
-
-  .idea-card {
-    border: 1px solid var(--gray-100);
-    border-radius: 2px;
-    padding: 2.5rem;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition: border-color 0.2s ease;
-    background: var(--white);
-  }
-
-  .idea-card.active { border-color: var(--black); }
-
-  .idea-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-    line-height: 1.05;
-    letter-spacing: 0.02em;
-    color: var(--black);
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-why {
-    font-size: 0.88rem;
-    color: var(--gray-500);
-    font-weight: 300;
-    line-height: 1.65;
-    font-style: italic;
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-card.shuffling .idea-tag,
-  .idea-card.shuffling .idea-title,
-  .idea-card.shuffling .idea-why { opacity: 0; }
-
-  .actions {
-    max-width: 680px;
-    margin: 1rem auto 0;
-    padding: 0 1.5rem;
-    display: flex;
-    gap: 0.6rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.75s;
-  }
-
-  .btn-primary {
-    flex: 1;
-    background: var(--black);
-    color: var(--white);
-    border: 1px solid var(--black);
-    padding: 0.9rem 1.5rem;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.15rem;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-  }
-
-  .btn-primary:hover { background: var(--gray-900); }
-  .btn-primary:active { transform: scale(0.99); }
-
-  .btn-icon {
-    background: transparent;
-    border: 1px solid var(--gray-100);
-    color: var(--gray-500);
-    padding: 0.9rem 1rem;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  .btn-icon:hover {
-    border-color: var(--black);
-    color: var(--black);
-  }
-
-  .saved-section {
-    max-width: 680px;
-    margin: 2.5rem auto 0;
-    padding: 0 1.5rem;
-    display: none;
-  }
-
-  .saved-section.visible { display: block; }
-
-  .saved-header {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--gray-100);
-    margin-bottom: 0.75rem;
-  }
-
-  .saved-list { display: flex; flex-direction: column; gap: 1px; }
-
-  .saved-item {
-    background: var(--off-white);
-    padding: 0.9rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .saved-item-title {
-    font-size: 0.88rem;
-    line-height: 1.4;
-    color: var(--black);
-  }
-
-  .saved-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-  }
-
-  .saved-cat {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gray-300);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .btn-remove {
-    background: none;
-    border: none;
-    color: var(--gray-300);
-    cursor: pointer;
-    font-size: 0.8rem;
-    transition: color 0.15s;
-  }
-  .btn-remove:hover { color: var(--black); }
-
-  .toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--black);
-    color: var(--white);
-    padding: 0.65rem 1.25rem;
-    border-radius: 2px;
-    font-size: 0.8rem;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.04em;
-    transition: transform 0.25s ease;
-    z-index: 999;
-    white-space: nowrap;
-  }
-
-  .toast.show { transform: translateX(-50%) translateY(0); }
-
-  footer {
-    text-align: center;
-    padding: 3rem 1.5rem 2rem;
-    font-size: 0.72rem;
-    color: var(--gray-300);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
-    border-top: 1px solid var(--gray-100);
-    margin-top: 4rem;
-  }
-
-  footer a { color: var(--gray-500); text-decoration: none; transition: color 0.15s; }
-  footer a:hover { color: var(--black); }
-
-  @keyframes up {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @media (max-width: 480px) {
-    .actions { flex-wrap: wrap; }
-    .btn-primary { min-width: 100%; }
-    header { padding: 1rem 1.25rem; }
-    .hero { padding: 3rem 1.25rem 2rem; }
-  }
-</style>
-</head>
+<html>
+<head><title>600 AI SaaS Ideas</title></head>
 <body>
-
-<header>
-  <div class="logo">TrueLeverage<span>.AI</span></div>
-  <a href="https://trueleverageai.com" class="header-link">← Back to site</a>
-</header>
-
-<section class="hero">
-  <div class="eyebrow">Free · Instant · No Signup</div>
-  <h1>YOUR NEXT<span class="line2">BIG IDEA</span></h1>
-  <p class="hero-sub">AI-powered business ideas across SaaS, automation, creator tools, and freelancing. Some sharp. Some unhinged. All free.</p>
-</section>
-
-<div class="filter-bar" id="filterBar"></div>
-
-<div class="card-wrap">
-  <div class="idea-card" id="ideaCard">
-    <div class="idea-tag" id="ideaTag">— Ready —</div>
-    <div class="idea-title" id="ideaTitle">Hit generate to get your first idea</div>
-    <div class="idea-why" id="ideaWhy">Ideas across SaaS, automation, creator tools, freelancing and more. Some will make you money. Some will make you laugh.</div>
-  </div>
-</div>
-
-<div class="actions">
-  <button class="btn-primary" onclick="generate()">GENERATE IDEA</button>
-  <button class="btn-icon" onclick="saveIdea()">🔖 Save</button>
-  <button class="btn-icon" onclick="shareIdea()">↗ Share</button>
-</div>
-
-<div class="saved-section" id="savedSection">
-  <div class="saved-header">Saved Ideas (<span id="savedCount">0</span>)</div>
-  <div class="saved-list" id="savedList"></div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<footer>
-  <a href="https://trueleverageai.com">trueleverageai.com</a> &nbsp;·&nbsp; Built for builders &amp; the slightly unhinged
-</footer>
-
 <script>
 const IDEAS = [
-  // SAAS
-  {t:"AI that writes your cold emails then follows up when you get ghosted", c:"SaaS", w:"The worst part of outreach isn't sending. It's the silence after."},
-  {t:"SaaS that detects when a client is about to churn and sends them a meme", c:"SaaS", w:"Humor disarms faster than a discount."},
-  {t:"AI that turns your Notion chaos into an actual product roadmap", c:"SaaS", w:"Most founders live in Notion. None of them have a real roadmap."},
-  {t:"Auto-cancels SaaS subscriptions you haven't touched in 30 days", c:"SaaS", w:"People overpay for unused tools by thousands every year."},
-  {t:"AI that reads your Slack and tells you which meetings could've been emails", c:"SaaS", w:"Every team needs this. Every manager fears it."},
-  {t:"Invoice tool that guilt-trips late payers with escalating passive-aggression", c:"SaaS", w:"Freelancers globally would subscribe to this immediately."},
-  {t:"AI meeting summarizer that flags who contributed nothing on the call", c:"SaaS", w:"Corporate accountability, finally automated."},
-  {t:"Tool that converts any Google Sheet into a functional web app in 60 seconds", c:"SaaS", w:"Sheets is already a database. Nobody treats it that way."},
-  {t:"AI that rates your pricing page and tells you why you're leaving money on the table", c:"SaaS", w:"Pricing is the most neglected growth lever in any SaaS."},
-  {t:"Automated changelog writer that turns GitHub commits into human-readable updates", c:"SaaS", w:"Developers hate writing changelogs. Users need them."},
-  {t:"AI that monitors competitor pricing and alerts you to undercuts in real-time", c:"SaaS", w:"Price wars are won by whoever has the best data."},
-  {t:"AI that converts any podcast transcript into a full drip email course", c:"SaaS", w:"Podcasters have endless content locked in audio. This unlocks it."},
-  {t:"One-click NDA generator that explains what you're actually signing", c:"SaaS", w:"Legal jargon kills deals. Plain English closes them."},
-  {t:"AI that rewrites your LinkedIn About so you sound 40% more credible", c:"SaaS", w:"Everyone has a bad LinkedIn bio. Everyone knows it. Nobody fixes it."},
-  {t:"AI that detects burnout risk in your team's Slack tone before it becomes a resignation", c:"SaaS", w:"Mental health monitoring before the letter arrives."},
-  {t:"SaaS that A/B tests your email subject lines without needing a developer", c:"SaaS", w:"Most small businesses skip A/B testing entirely. This removes all friction."},
-  {t:"AI contract reviewer that highlights clauses that could ruin you, in plain English", c:"SaaS", w:"Most people sign contracts they don't fully understand."},
-  {t:"Tool that auto-generates case studies from your client Zoom recordings", c:"SaaS", w:"The best marketing asset. Also the most ignored."},
-  {t:"AI that monitors ProductHunt daily and surfaces gaps that are still unbuilt", c:"SaaS", w:"The best startup ideas are hiding in plain sight."},
-  {t:"SaaS that turns support tickets into a public FAQ automatically", c:"SaaS", w:"Reduce ticket volume by 40% without hiring anyone."},
-  {t:"AI onboarding builder that adapts based on how confused the user looks", c:"SaaS", w:"Churn happens in the first 7 days. Fix that first."},
-  {t:"Subscription pauser — pause any service without cancelling", c:"SaaS", w:"The cancel button causes churn. The pause button saves revenue."},
-  {t:"AI that watches your analytics and explains what the numbers actually mean", c:"SaaS", w:"Metrics without context are just anxiety."},
-  {t:"Tool that converts blog posts into Twitter/X threads with one click", c:"SaaS", w:"Repurposing content is the highest-ROI content activity that exists."},
-  {t:"AI CRM that fills itself by reading your emails and call notes", c:"SaaS", w:"Nobody updates their CRM. This one doesn't need you to."},
-  {t:"SaaS that builds your entire sales deck from just your website URL", c:"SaaS", w:"First sales decks take 8 hours. This takes 8 seconds."},
-  {t:"AI that rewrites app store descriptions to rank higher and convert better", c:"SaaS", w:"ASO is the most ignored distribution channel for mobile SaaS."},
-  {t:"Tool that identifies your highest-churn user segments before they leave", c:"SaaS", w:"Retention is cheaper than acquisition. Data makes it possible."},
-  {t:"AI competitor teardown — generates a full analysis from any SaaS URL", c:"SaaS", w:"Competitive intel used to need a strategy consultant. Not anymore."},
-  {t:"Refund predictor — flags unhappy users before they click cancel", c:"SaaS", w:"Unhappy users leave a trail. Most companies don't read it."},
-  {t:"AI that generates user interview questions from your product's current weak spots", c:"SaaS", w:"Most product teams do user research without knowing what to ask."},
-  {t:"SaaS that auto-generates a weekly progress email for every client account", c:"SaaS", w:"Account health communication is what separates retained clients from churned ones."},
-  {t:"AI that converts your help docs into an interactive chatbot in one click", c:"SaaS", w:"Help docs are written. Chatbots are used. Bridge the gap."},
-  {t:"Tool that predicts which features your free users need to convert to paid", c:"SaaS", w:"Freemium only works if you know which feature is the unlock."},
-  {t:"AI that turns customer complaints into a prioritized product backlog", c:"SaaS", w:"Your support inbox is your best product manager. Nobody's reading it."},
-  {t:"SaaS that monitors your NPS score in real-time and alerts you to drops", c:"SaaS", w:"NPS surveys happen quarterly. Problems happen daily."},
-  {t:"AI that writes personalized re-engagement emails for dormant users", c:"SaaS", w:"Dormant users already know your product. Reactivation is cheaper than acquisition."},
-  {t:"Tool that converts any sales call recording into a structured deal brief", c:"SaaS", w:"Sales notes are either missing or useless. This fixes both."},
-  {t:"AI that identifies which onboarding step is where most users drop off", c:"SaaS", w:"Most onboarding drop-off is invisible without instrumentation."},
-  {t:"SaaS pricing page optimizer that runs experiments without a developer", c:"SaaS", w:"Most SaaS companies set pricing once and forget it for years."},
-
-  // AUTOMATION
-  {t:"n8n workflow marketplace where non-technical founders browse, fork and deploy", c:"Automation", w:"Most automation value is locked behind technical knowledge."},
-  {t:"AI that builds your entire lead gen workflow from a single job description", c:"Automation", w:"Lead generation is just repeatable steps. Automate all of them."},
-  {t:"Tool that watches your inbox and auto-drafts replies you approve with one click", c:"Automation", w:"Email is where time goes to die. This brings it back."},
-  {t:"AI that monitors any website for changes and summarizes what changed and why it matters", c:"Automation", w:"Staying current on competitors is a full-time job. It shouldn't be."},
-  {t:"Automated social proof collector — emails happy customers and compiles testimonials", c:"Automation", w:"Every business has happy customers. Few ever ask them to speak up."},
-  {t:"AI that sets up your entire new client onboarding sequence from a form submission", c:"Automation", w:"Onboarding delay is the leading cause of early churn."},
-  {t:"Tool that turns any spreadsheet into a scheduled automated report via email", c:"Automation", w:"Most reports are manual. All of them should be automated."},
-  {t:"AI-powered follow-up sequence that knows when to stop following up", c:"Automation", w:"Persistence is good. Harassment is not. The line is data-driven."},
-  {t:"AI that auto-posts your content across platforms while preserving format per channel", c:"Automation", w:"One piece of content posted everywhere manually takes 45 minutes."},
-  {t:"Tool that monitors your Google Reviews and responds automatically in your tone", c:"Automation", w:"Responding to reviews improves ranking. Manual responses don't scale."},
-  {t:"AI that auto-qualifies inbound leads before a human ever sees them", c:"Automation", w:"Sales teams spend 70% of time on leads that will never close."},
-  {t:"Automated PR outreach that matches your story to the right journalist", c:"Automation", w:"PR is a distribution channel most founders never touch because it feels manual."},
-  {t:"AI that auto-schedules your content calendar from a single monthly prompt", c:"Automation", w:"Content calendars take hours to plan. The ideas are the hard part."},
-  {t:"Automation that finds unresponsive leads and re-engages them with a different angle", c:"Automation", w:"Most leads don't convert on the first touch. Or the second. Or the third."},
-  {t:"AI that detects duplicate work across your team and flags it before it's wasted", c:"Automation", w:"Two people solving the same problem is invisible without tooling."},
-  {t:"Tool that auto-generates a weekly competitive intelligence brief from open sources", c:"Automation", w:"Competitive research takes 4 hours a week. This takes 4 minutes."},
-
-  // FREELANCING
-  {t:"AI that negotiates your freelance rate on your behalf via email", c:"Freelancing", w:"Most freelancers undercharge because negotiation feels awkward."},
-  {t:"Portfolio generator that shows your work AND the client's measurable ROI", c:"Freelancing", w:"Clients don't buy design. They buy outcomes."},
-  {t:"AI that tracks scope creep and generates a change order before it gets awkward", c:"Freelancing", w:"Scope creep silently kills freelance margins."},
-  {t:"Client red-flag detector — paste a job post, get a toxicity score", c:"Freelancing", w:"Every freelancer has a horror client story. This prevents the next one."},
-  {t:"AI proposal writer that customizes each pitch from the client's own website copy", c:"Freelancing", w:"Generic proposals lose. Specific proposals win."},
-  {t:"AI retainer pitch generator — converts one-off clients into monthly recurring revenue", c:"Freelancing", w:"One retainer beats ten random projects."},
-  {t:"Tool that finds your ideal client on LinkedIn and drafts the first message", c:"Freelancing", w:"Outreach is math. This makes it faster math."},
-  {t:"AI that packages your freelance skills into a productized service menu", c:"Freelancing", w:"Productizing is how freelancers escape the time-for-money trap."},
-  {t:"Rate calculator that factors in unpaid admin time most freelancers ignore", c:"Freelancing", w:"If you charge $50/hr but 30% is admin, you're earning $35/hr."},
-  {t:"AI that writes your Upwork profile to filter out low-budget clients automatically", c:"Freelancing", w:"Most gig profiles attract race-to-the-bottom clients by default."},
-  {t:"Tool that converts scattered client testimonials into a persuasive case study", c:"Freelancing", w:"Testimonials are raw material. Case studies are the product."},
-  {t:"AI that identifies which of your clients is least profitable and most draining", c:"Freelancing", w:"Fire the bottom 20% of clients. Free up 60% of your energy."},
-  {t:"AI that rewrites your service page so clients understand what they're buying", c:"Freelancing", w:"Most service pages describe the work. Not the transformation."},
-  {t:"Freelance project post-mortem tool — what went wrong and how to price it next time", c:"Freelancing", w:"Most freelancers finish projects and immediately forget what they learned."},
-
-  // CREATORS
-  {t:"AI that turns your most engaging tweet into a full newsletter issue", c:"Creators", w:"Your best tweet took 30 seconds. Your newsletter takes 3 hours."},
-  {t:"YouTube thumbnail tester that predicts CTR before you upload", c:"Creators", w:"Thumbnails determine 70% of views. Most creators guess."},
-  {t:"AI brand deal pitch writer that actually gets replies from sponsors", c:"Creators", w:"99% of cold sponsor emails go unanswered. Pitch structure is why."},
-  {t:"Script writer for YouTube Shorts that hooks in the first 1.5 seconds", c:"Creators", w:"The algorithm rewards retention. Retention starts at second one."},
-  {t:"AI that identifies which topics your audience asks about but you never cover", c:"Creators", w:"Content gaps are where subscriber growth hides."},
-  {t:"Tool that finds your top referenced products and builds an affiliate page automatically", c:"Creators", w:"Passive affiliate income requires zero extra content to create."},
-  {t:"AI that rewrites your old content to match current SEO trends monthly", c:"Creators", w:"Old content decays. Refreshed content compounds."},
-  {t:"AI that generates 90 days of content ideas from a single interview transcript", c:"Creators", w:"The bottleneck is never content. It's always ideas."},
-  {t:"Newsletter subject line optimizer trained on what actually gets opened", c:"Creators", w:"Open rates live or die by the subject line. Most writers guess."},
-  {t:"AI that turns your podcast into a searchable knowledge base for your audience", c:"Creators", w:"Podcasts are unsearchable. This changes that."},
-  {t:"Tool that repurposes one long YouTube video into 30 days of platform content", c:"Creators", w:"One piece of content. Infinite formats. One afternoon of work."},
-
-  // AI TOOLS
-  {t:"Prompt library marketplace where specialists sell high-performing prompts", c:"AI Tools", w:"Good prompts are intellectual property. Nobody is monetizing them properly."},
-  {t:"AI that stress-tests your business model against 10 different market scenarios", c:"AI Tools", w:"Most business models only work in good conditions."},
-  {t:"Tool that turns any Reddit thread into a validated product hypothesis", c:"AI Tools", w:"Reddit is the world's largest free focus group."},
-  {t:"AI that generates a go-to-market plan for any SaaS in under 2 minutes", c:"AI Tools", w:"GTM strategy shouldn't take a consultant and 6 weeks."},
-  {t:"Idea validation tool that searches for evidence people are already paying for this", c:"AI Tools", w:"The only real validation is someone handing over money."},
-  {t:"AI that identifies your features that are table stakes vs true differentiators", c:"AI Tools", w:"Most products lead with features that competitors also have."},
-  {t:"AI that finds monetizable micro-niches in any market that are underserved", c:"AI Tools", w:"Niches feel small until they have a leaderboard."},
-  {t:"AI business model generator — pick an audience, get 10 revenue models ranked by feasibility", c:"AI Tools", w:"Most founders pick a revenue model before validating the audience."},
-  {t:"Tool that monitors niche subreddits and alerts you to emerging pain points", c:"AI Tools", w:"Every great product starts as someone's repeated complaint."},
-  {t:"AI that writes a full product spec from a 2-minute voice note of your rough idea", c:"AI Tools", w:"Ideas die between the brain and the document. This bridges that gap."},
-  {t:"AI that explains what any competitor does better than their own website does", c:"AI Tools", w:"Most SaaS websites are written for people who already know the product."},
-
-  // FINANCE
-  {t:"AI that explains what the market did today in under 60 words, jargon-free", c:"Finance", w:"Financial news is written for people who already understand finance."},
-  {t:"Personal finance roast — paste your bank statement, get judged constructively", c:"Finance", w:"Shame-based finance doesn't work. Comedy-based might."},
-  {t:"AI that detects subscription fees you forgot you were paying", c:"Finance", w:"The average person has 12 active subscriptions. They think they have 5."},
-  {t:"Salary negotiation coach that tells you what to say and when to go silent", c:"Finance", w:"Most salary negotiations fail in the first 30 seconds."},
-  {t:"Freelancer tax estimator that reminds you to save as each invoice lands", c:"Finance", w:"Tax surprises are the most painful part of going independent."},
-  {t:"AI that identifies financial influencer advice that could actually ruin you", c:"Finance", w:"Finance Twitter is 20% wisdom and 80% survivorship bias."},
-  {t:"Tool that predicts your net worth in 10 years based on current financial habits", c:"Finance", w:"Future-state visualization drives present behavior change."},
-
-  // WEB3
-  {t:"AI that explains any crypto whitepaper in 3 bullet points without the hype", c:"Web3", w:"Most whitepapers are marketing documents dressed as technical papers."},
-  {t:"Rug pull risk scorer for any new token before you put money in", c:"Web3", w:"On-chain data reveals what influencers won't."},
-  {t:"AI that translates any smart contract into plain English before you sign", c:"Web3", w:"Most hacks succeed because users don't read what they're approving."},
-  {t:"Web3 job board that matches talent based on on-chain contribution history", c:"Web3", w:"GitHub for crypto doesn't exist yet. On-chain activity is the real resume."},
-  {t:"AI that writes a DAO proposal people will actually vote yes on", c:"Web3", w:"Most DAO proposals fail because they're written for developers, not voters."},
-  {t:"Crypto tax calculator that handles local rules and generates filing exports", c:"Web3", w:"Crypto tax compliance is genuinely complex and almost entirely unserved."},
-
-  // EDUCATION
-  {t:"Skill gap analyzer that maps where you are now to the role you actually want", c:"Education", w:"Career changers waste months studying the wrong things."},
-  {t:"AI that explains any concept using analogies from your specific background", c:"Education", w:"Concepts stick when tied to something you already love."},
-  {t:"AI debate coach that argues the opposite of your position to make you sharper", c:"Education", w:"The best way to strengthen an argument is to stress-test it."},
-  {t:"Language learning app that only teaches words from your own text messages", c:"Education", w:"You learn faster with vocabulary you'll actually use."},
-  {t:"AI that turns any textbook chapter into a 5-minute audio summary", c:"Education", w:"The next generation learns from audio. Textbooks are still text."},
-  {t:"Tool that builds a 30-day crash course from any Wikipedia article", c:"Education", w:"Wikipedia has infinite depth. Nobody knows how to navigate it systematically."},
-
-  // ABSURD
-  {t:"Startup name validator that checks if it sounds like a skin condition", c:"Absurd", w:"Lumio. Zilch. Florp. These are real company names."},
-  {t:"Passive-aggressive email decoder — what your manager actually means", c:"Absurd", w:"'Per my last email' has layers. This decodes them all."},
-  {t:"AI that roasts your LinkedIn profile like a stand-up comedian", c:"Absurd", w:"Nothing is more roast-worthy than professional self-promotion."},
-  {t:"Tool that calculates how much of your life you've spent in unnecessary meetings", c:"Absurd", w:"Once you see the number, everything changes."},
-  {t:"AI that writes your resignation letter as a cinematic farewell speech", c:"Absurd", w:"If you're leaving, leave with impact."},
-  {t:"Corporate buzzword bingo card generator for your next all-hands", c:"Absurd", w:"Synergy. Ecosystem. Move the needle. You already have three."},
-  {t:"Tool that tells you if your business idea already failed as a startup in 2014", c:"Absurd", w:"The graveyard of dead startups is the best free research available."},
-  {t:"App that detects you're shopping online at 2am and asks if you're okay", c:"Absurd", w:"Cart abandonment is sometimes a cry for help."},
-  {t:"Meeting optimizer that mathematically proves your standup should be a Slack message", c:"Absurd", w:"6 people × 30 min × 5 days = 750 hours/year. Do the math."},
-  {t:"AI that turns your failed startup into a Harvard Business School case study", c:"Absurd", w:"Failure is just a case study you haven't published yet."},
-  {t:"Tool that calculates the ROI of your last argument, in dollars", c:"Absurd", w:"Was it worth it? Finally, a data-driven answer."},
-  {t:"AI that writes a formal complaint letter to the universe about your situation", c:"Absurd", w:"Legal notice to Mercury retrograde. Filed in triplicate."},
-  {t:"AI that generates your startup valuation if you'd started 3 years earlier", c:"Absurd", w:"Regret, quantified."},
-  {t:"AI that rewrites your performance review as a war general's dispatch", c:"Absurd", w:"'Q3 was a battle. We held the line on margins.'"},
-  {t:"Tool that tells you which of your friends would actually help you move apartments", c:"Absurd", w:"The ultimate loyalty test, automated."},
+{
+t: "Platform that automates customer churn for traders",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers save time",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for students",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students grow faster",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students save time",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for students",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for small businesses",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators increase revenue",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders analyze performance",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for creators",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for creators",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for small businesses",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers save time",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into content instantly",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators increase revenue",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for creators",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders analyze performance",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for freelancers",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders analyze performance",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for creators",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders automate work",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for creators",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers analyze performance",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders analyze performance",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for creators",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students increase revenue",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into content instantly",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into content instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into actionable insights instantly",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for founders",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for traders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for creators",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for students",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for traders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for small businesses",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators grow faster",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses analyze performance",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders automate work",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for students",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students analyze performance",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into content instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for traders",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses save time",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students analyze performance",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses save time",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders automate work",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for creators",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps students automate work",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for students",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for traders",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "Education",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for small businesses",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for small businesses",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Education",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for freelancers",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators save time",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps students increase revenue",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for freelancers",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students increase revenue",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders analyze performance",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators increase revenue",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for students",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for freelancers",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for students",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for creators",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into automations instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders automate work",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders analyze performance",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders grow faster",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for founders",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into content instantly",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for freelancers",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for small businesses",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders save time",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for students",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students automate work",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for founders",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into content instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for creators",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators automate work",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators grow faster",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for traders",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for traders",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators grow faster",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders automate work",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into content instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders grow faster",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders grow faster",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for students",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for freelancers",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for small businesses",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for traders",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for creators",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders save time",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for students",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders save time",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators automate work",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into content instantly",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders save time",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for traders",
+c: "Education",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for founders",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for creators",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students automate work",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers increase revenue",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers increase revenue",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for traders",
+c: "Education",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into automations instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders grow faster",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers save time",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses analyze performance",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses save time",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for freelancers",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators save time",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses save time",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for founders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into automations instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into automations instantly",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for founders",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders automate work",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into actionable insights instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for freelancers",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for small businesses",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses automate work",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students automate work",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for founders",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students save time",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators automate work",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for students",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into content instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into actionable insights instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers analyze performance",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into dashboards instantly",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for traders",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators automate work",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into content instantly",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for founders",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into content instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into content instantly",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into actionable insights instantly",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students grow faster",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses increase revenue",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders save time",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for creators",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for creators",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders analyze performance",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders automate work",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers analyze performance",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for founders",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators save time",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses increase revenue",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses increase revenue",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders automate work",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for traders",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators automate work",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for students",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for traders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps students automate work",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps founders save time",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers increase revenue",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders analyze performance",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps creators save time",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders save time",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into actionable insights instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses analyze performance",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts videos into automations instantly",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Education",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses increase revenue",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for students",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for traders",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for creators",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for traders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students save time",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for students",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders grow faster",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for students",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for traders",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into content instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into content instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for traders",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders grow faster",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into content instantly",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators increase revenue",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for students",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses increase revenue",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts notes into actionable insights instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "Creators",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for small businesses",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Freelancing",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses save time",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into content instantly",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders grow faster",
+c: "Freelancing",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for creators",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for founders",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for creators",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for founders",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders automate work",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students grow faster",
+c: "Creators",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "AI Tools",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts videos into dashboards instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "Finance",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders analyze performance",
+c: "Education",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates lead generation for students",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for creators",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into content instantly",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "Freelancing",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders automate work",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators increase revenue",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators automate work",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps founders increase revenue",
+c: "AI Tools",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for small businesses",
+c: "Education",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for students",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for traders",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into automations instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps traders increase revenue",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators automate work",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps founders automate work",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "Creators",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into content instantly",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "Automation",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "Education",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects lost opportunities and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates email overload for traders",
+c: "SaaS",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates lead generation for traders",
+c: "SaaS",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers grow faster",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps traders analyze performance",
+c: "SaaS",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates customer churn for freelancers",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts notes into automations instantly",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "Creators",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students analyze performance",
+c: "Finance",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps freelancers save time",
+c: "Freelancing",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into actionable insights instantly",
+c: "Automation",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps small businesses save time",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students save time",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps small businesses grow faster",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "SaaS",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI tool that helps creators analyze performance",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates content creation for founders",
+c: "Creators",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI tool that helps freelancers automate work",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "SaaS",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts data into dashboards instantly",
+c: "Education",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Finance",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts voice into automations instantly",
+c: "Education",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates email overload for students",
+c: "Freelancing",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates email overload for freelancers",
+c: "SaaS",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "Finance",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Tool that converts notes into content instantly",
+c: "AI Tools",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into dashboards instantly",
+c: "AI Tools",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Platform that automates customer churn for small businesses",
+c: "Automation",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI tool that helps students automate work",
+c: "AI Tools",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "AI system that detects inefficiencies and fixes it automatically",
+c: "AI Tools",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "Automation",
+w: "Target: creators. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "AI system that detects manual errors and fixes it automatically",
+c: "Automation",
+w: "Target: freelancers. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "AI system that detects revenue leaks and fixes it automatically",
+c: "Creators",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Tool that converts voice into content instantly",
+c: "Automation",
+w: "Target: students. Monetization: Subscription ₹299–₹999/month. Difficulty: Low–Medium."
+},{
+t: "Platform that automates content creation for freelancers",
+c: "Freelancing",
+w: "Target: founders. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+},{
+t: "Tool that converts voice into actionable insights instantly",
+c: "Finance",
+w: "Target: traders. Monetization: Subscription ₹299–₹999/month. Difficulty: Medium."
+},{
+t: "Platform that automates content creation for small businesses",
+c: "Finance",
+w: "Target: small businesses. Monetization: Subscription ₹299–₹999/month. Difficulty: Low."
+}
 ];
-
-const CATEGORIES = ['All', ...new Set(IDEAS.map(i => i.c))];
-let current = null;
-let saved = [];
-let activeCategory = 'All';
-let seen = new Set();
-
-function init() {
-  const bar = document.getElementById('filterBar');
-  CATEGORIES.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
-    btn.textContent = cat;
-    btn.onclick = () => setCategory(cat, btn);
-    bar.appendChild(btn);
-  });
-}
-
-function setCategory(cat, el) {
-  activeCategory = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function generate() {
-  const card = document.getElementById('ideaCard');
-  card.classList.add('shuffling', 'active');
-  setTimeout(() => {
-    const pool = activeCategory === 'All' ? IDEAS : IDEAS.filter(i => i.c === activeCategory);
-    const unseen = pool.filter(i => !seen.has(i.t));
-    const source = unseen.length > 0 ? unseen : pool;
-    const idea = source[Math.floor(Math.random() * source.length)];
-    current = idea;
-    seen.add(idea.t);
-    document.getElementById('ideaTag').textContent = idea.c;
-    document.getElementById('ideaTitle').textContent = idea.t;
-    document.getElementById('ideaWhy').textContent = idea.w;
-    card.classList.remove('shuffling');
-  }, 140);
-}
-
-function saveIdea() {
-  if (!current) { showToast('Generate an idea first'); return; }
-  if (saved.find(i => i.t === current.t)) { showToast('Already saved'); return; }
-  saved.push(current);
-  document.getElementById('savedCount').textContent = saved.length;
-  renderSaved();
-  showToast('Saved');
-}
-
-function renderSaved() {
-  const sec = document.getElementById('savedSection');
-  const list = document.getElementById('savedList');
-  sec.classList.toggle('visible', saved.length > 0);
-  list.innerHTML = saved.map((idea, i) => `
-    <div class="saved-item">
-      <div class="saved-item-title">${idea.t}</div>
-      <div class="saved-meta">
-        <span class="saved-cat">${idea.c}</span>
-        <button class="btn-remove" onclick="removeIdea(${i})">✕</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function removeIdea(i) {
-  saved.splice(i, 1);
-  document.getElementById('savedCount').textContent = saved.length;
-  renderSaved();
-}
-
-function shareIdea() {
-  if (!current) { showToast('Generate an idea first'); return; }
-  const text = `💡 "${current.t}"\n\n${current.w}\n\nGet yours → trueleverageai.com`;
-  if (navigator.share) {
-    navigator.share({ text });
-  } else {
-    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
-  }
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
-
-init();
 </script>
+<h1>600 AI SaaS Ideas Ready</h1>
 </body>
 </html>

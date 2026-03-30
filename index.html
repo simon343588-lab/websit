@@ -3,1084 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Business Idea Generator — TrueLeverage AI</title>
-<meta name="description" content="Generate sharp AI business ideas. Free. Instant. No signup.">
-<meta property="og:title" content="AI Business Idea Generator — TrueLeverage AI">
-<meta property="og:description" content="Sharp AI-powered business ideas for builders, solopreneurs, and the slightly unhinged.">
-<meta property="og:url" content="https://trueleverageai.com">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Bebas+Neue&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Zero-API Flashcard Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
   :root {
-    --black: #000000;
-    --white: #ffffff;
-    --off-white: #f5f5f3;
-    --gray-100: #e8e8e6;
-    --gray-300: #b0b0aa;
-    --gray-500: #6b6b65;
-    --gray-700: #2a2a28;
-    --gray-900: #111110;
+    --bg: #fafafa;
+    --text: #111;
+    --border: #e5e5e5;
+    --accent: #000;
   }
-
+  
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  
   body {
-    background: var(--white);
-    color: var(--black);
     font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
-    -webkit-font-smoothing: antialiased;
+    padding: 2rem;
   }
 
   header {
-    border-bottom: 1px solid var(--gray-100);
-    padding: 1.25rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.3rem;
-    letter-spacing: 0.06em;
-    color: var(--black);
-  }
-
-  .logo span { color: var(--gray-300); }
-
-  .header-link {
-    font-size: 0.75rem;
-    color: var(--gray-500);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    font-family: 'JetBrains Mono', monospace;
-    transition: color 0.2s;
-  }
-  .header-link:hover { color: var(--black); }
-
-  .hero {
-    max-width: 680px;
-    margin: 0 auto;
-    padding: 5rem 1.5rem 3rem;
     text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+    max-width: 600px;
   }
 
-  .eyebrow {
+  h1 { font-weight: 600; font-size: 2rem; letter-spacing: -0.02em; }
+  p.subtitle { color: #666; font-size: 0.9rem; margin-top: 0.5rem; line-height: 1.5; }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  }
+
+  textarea {
+    width: 100%;
+    height: 150px;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: up 0.5s ease forwards 0.1s;
+    font-size: 0.85rem;
+    resize: vertical;
+    margin-bottom: 1rem;
+    outline: none;
   }
+  
+  textarea:focus { border-color: var(--accent); }
 
-  h1 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3.2rem, 11vw, 7rem);
-    line-height: 0.92;
-    letter-spacing: 0.02em;
-    color: var(--black);
-    margin-bottom: 1.25rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.25s;
-  }
-
-  h1 .line2 {
-    display: block;
-    color: var(--gray-300);
-  }
-
-  .hero-sub {
-    font-size: 0.9rem;
-    color: var(--gray-500);
-    font-weight: 300;
-    line-height: 1.7;
-    max-width: 360px;
-    margin: 0 auto;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.4s;
-  }
-
-  .filter-bar {
-    max-width: 680px;
-    margin: 2.5rem auto 0;
-    padding: 0 1.5rem;
-    display: flex;
-    gap: 0.4rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.5s;
-  }
-
-  .filter-btn {
-    background: transparent;
-    border: 1px solid var(--gray-100);
-    color: var(--gray-500);
-    padding: 0.28rem 0.7rem;
-    border-radius: 2px;
-    font-size: 0.68rem;
-    cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .filter-btn:hover {
-    border-color: var(--gray-300);
-    color: var(--black);
-  }
-
-  .filter-btn.active {
-    background: var(--black);
-    border-color: var(--black);
-    color: var(--white);
-  }
-
-  .card-wrap {
-    max-width: 680px;
-    margin: 2rem auto 0;
-    padding: 0 1.5rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.6s;
-  }
-
-  .idea-card {
-    border: 1px solid var(--gray-100);
-    border-radius: 2px;
-    padding: 2.5rem;
-    min-height: 200px;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    transition: border-color 0.2s ease;
-    background: var(--white);
-  }
-
-  .idea-card.active { border-color: var(--black); }
-
-  .idea-tag {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(1.6rem, 4.5vw, 2.4rem);
-    line-height: 1.05;
-    letter-spacing: 0.02em;
-    color: var(--black);
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-why {
-    font-size: 0.88rem;
-    color: var(--gray-500);
-    font-weight: 300;
-    line-height: 1.65;
-    font-style: italic;
-    transition: opacity 0.12s ease;
-  }
-
-  .idea-card.shuffling .idea-tag,
-  .idea-card.shuffling .idea-title,
-  .idea-card.shuffling .idea-why { opacity: 0; }
-
-  .actions {
-    max-width: 680px;
-    margin: 1rem auto 0;
-    padding: 0 1.5rem;
-    display: flex;
-    gap: 0.6rem;
-    opacity: 0;
-    animation: up 0.6s ease forwards 0.75s;
-  }
-
-  .btn-primary {
-    flex: 1;
-    background: var(--black);
-    color: var(--white);
-    border: 1px solid var(--black);
-    padding: 0.9rem 1.5rem;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.15rem;
-    letter-spacing: 0.1em;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-  }
-
-  .btn-primary:hover { background: var(--gray-900); }
-  .btn-primary:active { transform: scale(0.99); }
-
-  .btn-icon {
-    background: transparent;
-    border: 1px solid var(--gray-100);
-    color: var(--gray-500);
-    padding: 0.9rem 1rem;
-    cursor: pointer;
-    border-radius: 2px;
-    transition: all 0.15s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.78rem;
-    letter-spacing: 0.02em;
-    white-space: nowrap;
-  }
-
-  .btn-icon:hover {
-    border-color: var(--black);
-    color: var(--black);
-  }
-
-  .saved-section {
-    max-width: 680px;
-    margin: 2.5rem auto 0;
-    padding: 0 1.5rem;
-    display: none;
-  }
-
-  .saved-section.visible { display: block; }
-
-  .saved-header {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.62rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--gray-500);
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--gray-100);
-    margin-bottom: 0.75rem;
-  }
-
-  .saved-list { display: flex; flex-direction: column; gap: 1px; }
-
-  .saved-item {
-    background: var(--off-white);
-    padding: 0.9rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
-  }
-
-  .saved-item-title {
-    font-size: 0.88rem;
-    line-height: 1.4;
-    color: var(--black);
-  }
-
-  .saved-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-shrink: 0;
-  }
-
-  .saved-cat {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--gray-300);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .btn-remove {
-    background: none;
+  button {
+    background: var(--accent);
+    color: #fff;
     border: none;
-    color: var(--gray-300);
+    padding: 0.8rem 1.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 0.8rem;
-    transition: color 0.15s;
+    width: 100%;
+    transition: opacity 0.2s;
   }
-  .btn-remove:hover { color: var(--black); }
+  button:hover { opacity: 0.85; }
 
-  .toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%) translateY(80px);
-    background: var(--black);
-    color: var(--white);
-    padding: 0.65rem 1.25rem;
-    border-radius: 2px;
-    font-size: 0.8rem;
+  /* FLASHCARD UI */
+  #studyArea {
+    display: none;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .stats {
+    display: flex;
+    justify-content: space-between;
     font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.04em;
-    transition: transform 0.25s ease;
-    z-index: 999;
-    white-space: nowrap;
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
   }
 
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  .card-scene {
+    width: 100%;
+    height: 250px;
+    perspective: 1000px;
+    margin-bottom: 1.5rem;
+  }
 
-  footer {
+  .card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
+
+  .card.is-flipped { transform: rotateY(180deg); }
+
+  .card-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
     text-align: center;
-    padding: 3rem 1.5rem 2rem;
-    font-size: 0.72rem;
-    color: var(--gray-300);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
-    border-top: 1px solid var(--gray-100);
-    margin-top: 4rem;
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
   }
 
-  footer a { color: var(--gray-500); text-decoration: none; transition: color 0.15s; }
-  footer a:hover { color: var(--black); }
-
-  @keyframes up {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
+  .card-back {
+    transform: rotateY(180deg);
+    background: var(--accent);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.5rem;
   }
 
-  @media (max-width: 480px) {
-    .actions { flex-wrap: wrap; }
-    .btn-primary { min-width: 100%; }
-    header { padding: 1rem 1.25rem; }
-    .hero { padding: 3rem 1.25rem 2rem; }
+  .controls {
+    display: flex;
+    gap: 1rem;
   }
+  
+  .btn-outline {
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { background: #f5f5f5; color: var(--accent); border-color: var(--accent); }
+
+  .blank { border-bottom: 2px solid var(--accent); color: transparent; padding: 0 2rem; }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">TrueLeverage<span>.AI</span></div>
-  <a href="https://trueleverageai.com" class="header-link">← Back to site</a>
+  <h1>Instant Flashcards</h1>
+  <p class="subtitle">Paste your textbook or notes. We auto-generate fill-in-the-blank flashcards running locally in your browser. 100% private. 0 APIs.</p>
 </header>
 
-<section class="hero">
-  <div class="eyebrow">Free · Instant · No Signup</div>
-  <h1>YOUR NEXT<span class="line2">BIG IDEA</span></h1>
-  <p class="hero-sub">AI-powered business ideas across SaaS, automation, creator tools, and freelancing. Some sharp. Some unhinged. All free.</p>
-</section>
+<div class="container" id="inputArea">
+  <textarea id="rawText" placeholder="Paste your study notes, Wikipedia article, or lecture transcript here...
+  
+(e.g., Mitochondria is the powerhouse of the cell. Photosynthesis converts light into energy.)"></textarea>
+  <button onclick="generateCards()">Generate Deck</button>
+</div>
 
-<div class="filter-bar" id="filterBar"></div>
+<div id="studyArea">
+  <div class="stats">
+    <span id="cardCount">Card 1 / 10</span>
+    <button class="btn-outline" style="padding: 0.3rem 0.6rem; width: auto; font-size:0.7rem;" onclick="resetApp()">← Back to Editor</button>
+  </div>
 
-<div class="card-wrap">
-  <div class="idea-card" id="ideaCard">
-    <div class="idea-tag" id="ideaTag">— Ready —</div>
-    <div class="idea-title" id="ideaTitle">Hit generate to get your first idea</div>
-    <div class="idea-why" id="ideaWhy">Ideas across SaaS, automation, creator tools, freelancing and more. Some will make you money. Some will make you laugh.</div>
+  <div class="card-scene" onclick="flipCard()">
+    <div class="card" id="flashcard">
+      <div class="card-face card-front" id="cardFront">Front</div>
+      <div class="card-face card-back" id="cardBack">Back</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn-outline" onclick="prevCard()">Previous</button>
+    <button onclick="nextCard()">Next Card</button>
   </div>
 </div>
 
-<div class="actions">
-  <button class="btn-primary" onclick="generate()">GENERATE IDEA</button>
-  <button class="btn-icon" onclick="saveIdea()">🔖 Save</button>
-  <button class="btn-icon" onclick="shareIdea()">↗ Share</button>
-</div>
-
-<div class="saved-section" id="savedSection">
-  <div class="saved-header">Saved Ideas (<span id="savedCount">0</span>)</div>
-  <div class="saved-list" id="savedList"></div>
-</div>
-
-<div class="toast" id="toast"></div>
-
-<footer>
-  <a href="https://trueleverageai.com">trueleverageai.com</a> &nbsp;·&nbsp; Built for builders &amp; the slightly unhinged
-</footer>
-
 <script>
-const IDEAS = [
-  // 1. SAAS - SALES
-  {t:"AI that auto-generates custom ROI calculators for outbound SaaS prospects", c:"SaaS - Sales", w:"Stop telling them you'll save them money. Send them a slider that proves it."},
-  {t:"Tool that monitors when a champion at a target account leaves for a new company", c:"SaaS - Sales", w:"A happy user moving to a new company is the warmest outbound lead in existence."},
-  {t:"B2B breakup email generator that uses humor to get a definitive yes or no", c:"SaaS - Sales", w:"The only thing worse than a 'no' is a 'maybe next quarter'."},
-  {t:"AI objection handler that listens to live sales calls and feeds rebuttals on screen", c:"SaaS - Sales", w:"Every objection has been handled before. You just forgot the script in the moment."},
-  {t:"SaaS that auto-fills CRM records by scraping a prospect's recent podcast appearances", c:"SaaS - Sales", w:"Nobody ignores an email that compliments a specific point they made on a podcast at 14:22."},
-  {t:"Automated LinkedIn voice note generator that sounds exactly like your sales reps", c:"SaaS - Sales", w:"Voice notes get a 40% higher reply rate. Recording them manually doesn't scale."},
-  {t:"AI that monitors CRM for 'closed lost' deals and auto-re-engages them after 6 months", c:"SaaS - Sales", w:"Timing kills more deals than budget. Six months later, the timing might be perfect."},
-  {t:"SaaS that builds a custom sales deck from a single target company URL", c:"SaaS - Sales", w:"First sales decks take 8 hours. This takes 8 seconds."},
-  {t:"AI that flags which specific feature is missing to close a stalled enterprise deal", c:"SaaS - Sales", w:"Sales reps guess what the blocker is. The email transcripts already know."},
-  {t:"Tool that auto-generates personalized video demos based on the prospect's industry", c:"SaaS - Sales", w:"Generic demos lose attention. Hyper-specific demos close deals."},
+  let deck = [];
+  let currentIndex = 0;
 
-  // 2. SAAS - MARKETING
-  {t:"AI that A/B tests your email subject lines without needing a developer", c:"SaaS - Marketing", w:"Most small businesses skip A/B testing entirely. This removes all friction."},
-  {t:"Tool that converts any podcast transcript into a full drip email course", c:"SaaS - Marketing", w:"Podcasters have endless content locked in audio. This unlocks it."},
-  {t:"AI that turns your best Twitter thread into a viral LinkedIn carousel", c:"SaaS - Marketing", w:"The content is validated. Now it just needs format translation."},
-  {t:"SaaS that monitors competitors' bad reviews to highlight what your copy should fix", c:"SaaS - Marketing", w:"Your competitor's 1-star reviews are your marketing playbook."},
-  {t:"AI that rewrites your landing page hero text based on the traffic source", c:"SaaS - Marketing", w:"A visitor from a TikTok ad needs different copy than a visitor from Google Search."},
-  {t:"Tool that finds dead links in your old content and automatically redirects them", c:"SaaS - Marketing", w:"Digital rot kills SEO. Fixing it manually is soul-crushing."},
-  {t:"Automated social proof collector that emails happy customers and extracts testimonials", c:"SaaS - Marketing", w:"Every business has happy customers. Few ever ask them to speak up."},
-  {t:"AI that monitors niche subreddits and alerts you to emerging pain points", c:"SaaS - Marketing", w:"Every great product feature starts as someone's repeated complaint on Reddit."},
-  {t:"SaaS that auto-translates your blog into Spanish and Hindi natively", c:"SaaS - Marketing", w:"The English-speaking market is saturated. The global market is wide open."},
-  {t:"Tool that turns a physical menu photo into an SEO-optimized landing page", c:"SaaS - Marketing", w:"PDF menus are a crime against local SEO."},
+  // Stopwords: Words we DO NOT want to make blanks out of
+  const stopwords = new Set(['about','above','after','again','against','all','and','any','are','aren','because','been','before','being','below','between','both','but','can','cannot','could','did','do','does','doing','down','during','each','few','for','from','further','had','has','have','having','here','how','into','isn','its','itself','more','most','mustn','nor','not','off','once','only','other','ought','our','ours','ourselves','out','over','own','same','shan','she','should','some','such','than','that','the','their','theirs','them','themselves','then','there','these','they','this','those','through','too','under','until','very','was','wasn','were','weren','what','when','where','which','while','who','whom','why','with','would','you','your','yours','yourself','yourselves']);
 
-  // 3. SAAS - FINANCE
-  {t:"AI that detects subscription fees you forgot you were paying", c:"SaaS - Finance", w:"The average person has 12 active subscriptions. They think they have 5."},
-  {t:"SaaS that automatically disputes unjustified Stripe chargebacks with generated evidence", c:"SaaS - Finance", w:"Friendly fraud costs founders billions. Disputing it manually costs them their sanity."},
-  {t:"Freelancer tax estimator that reminds you to save as each invoice lands", c:"SaaS - Finance", w:"Tax surprises are the most painful part of going independent."},
-  {t:"AI that explains what the market did today in under 60 words, jargon-free", c:"SaaS - Finance", w:"Financial news is written for people who already understand finance."},
-  {t:"Tool that predicts your startup runway based on actual daily burn, not projections", c:"SaaS - Finance", w:"Founders lie to themselves on spreadsheets. Bank APIs don't lie."},
-  {t:"Personal finance roast — paste your bank statement, get judged constructively", c:"SaaS - Finance", w:"Shame-based finance doesn't work. Comedy-based might."},
-  {t:"Invoice tool that guilt-trips late payers with escalating passive-aggression", c:"SaaS - Finance", w:"Freelancers globally would subscribe to this immediately."},
-  {t:"SaaS that identifies which software licenses your employees haven't used in 90 days", c:"SaaS - Finance", w:"Companies bleed thousands a month on abandoned SaaS seats."},
-  {t:"AI that cross-references your agency's timesheets with actual profit margins per client", c:"SaaS - Finance", w:"You are probably losing money on your favorite client."},
-  {t:"Tool that predicts your net worth in 10 years based on current daily spending habits", c:"SaaS - Finance", w:"Future-state visualization drives present behavior change."},
+  function generateCards() {
+    const text = document.getElementById('rawText').value;
+    if (!text.trim()) return alert('Paste some text first.');
 
-  // 4. SAAS - HR & OPS
-  {t:"AI that detects burnout risk in your team's Slack tone before it becomes a resignation", c:"SaaS - HR", w:"Mental health monitoring before the letter arrives."},
-  {t:"Tool that calculates how much of your life you've spent in unnecessary meetings", c:"SaaS - HR", w:"Once you see the actual dollar amount, everything changes."},
-  {t:"SaaS that auto-cancels recurring meetings if there is no agenda 24 hours prior", c:"SaaS - HR", w:"No agenda, no meeting. Enforced by software, not managers."},
-  {t:"AI that writes a diplomatic resignation letter based on your real, unfiltered complaints", c:"SaaS - HR", w:"Leave on good terms without hiding why you're actually leaving."},
-  {t:"Tool that matches new hires with internal mentors based on complementary soft skills", c:"SaaS - HR", w:"Onboarding is easy. Cultural integration is where companies fail."},
-  {t:"SaaS that anonymizes resumes to remove unconscious bias during the hiring screening", c:"SaaS - HR", w:"Diversity initiatives fail when human bias overrides them at step one."},
-  {t:"AI that rewrites your performance review as a war general's dispatch", c:"SaaS - HR", w:"'Q3 was a battle. We held the line on margins.' Make reviews fun."},
-  {t:"Tool that auto-generates an onboarding checklist based on the departing employee's workflow", c:"SaaS - HR", w:"Institutional knowledge leaves when the employee leaves. Capture it first."},
-  {t:"SaaS that lets remote teams expense coffee shop receipts with zero manager approval", c:"SaaS - HR", w:"Trust your team with $5 for a latte. The admin costs more than the coffee."},
-  {t:"AI that flags passive-aggressive language in internal emails and suggests rewrites", c:"SaaS - HR", w:"Stop the culture decay before it starts hitting the Slack channels."},
+    // Split text into sentences based on punctuation
+    const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
+    deck = [];
 
-  // 5. SAAS - DEV TOOLS
-  {t:"AI that reads a codebase and writes the missing documentation developers refuse to write", c:"SaaS - Dev", w:"No developer likes writing docs. Every developer complains when they don't exist."},
-  {t:"SaaS that monitors API usage and predicts your AWS bill before the end of the month", c:"SaaS - Dev", w:"Cloud bill shock has killed more startups than bad product-market fit."},
-  {t:"Tool that turns a Figma file into a fully functional React component with clean code", c:"SaaS - Dev", w:"The handoff from design to engineering is always broken. Eliminate the handoff."},
-  {t:"AI that scans code for dependencies that haven't been updated in 3 years", c:"SaaS - Dev", w:"Technical debt is silent until it causes a massive security breach."},
-  {t:"SaaS that automatically creates staging environments for every single pull request", c:"SaaS - Dev", w:"QA shouldn't require coordinating with the DevOps team."},
-  {t:"AI that writes unit tests for legacy code bases that nobody understands anymore", c:"SaaS - Dev", w:"Refactoring without tests is just high-stakes gambling."},
-  {t:"Tool that monitors GitHub for issues related to your product and drafts a polite reply", c:"SaaS - Dev", w:"Developer relations is mostly just being highly responsive."},
-  {t:"AI that converts your monolithic database into a GraphQL API in one afternoon", c:"SaaS - Dev", w:"Database migrations are a nightmare. AI makes it slightly less terrible."},
-  {t:"SaaS that auto-pauses non-critical cloud services during the weekend to save money", c:"SaaS - Dev", w:"Nobody is using your staging environment on Sunday at 3 AM. Turn it off."},
-  {t:"Tool that generates human-readable changelogs straight from messy git commit messages", c:"SaaS - Dev", w:"'Fixed bug' is not a changelog. Tell the users what actually changed."},
+    sentences.forEach(sentence => {
+      let cleanSentence = sentence.trim();
+      if (cleanSentence.length < 15) return; // Skip tiny fragments
 
-  // 6. AUTOMATION
-  {t:"n8n workflow marketplace where non-technical founders browse, fork and deploy", c:"Automation", w:"Most automation value is locked behind technical knowledge."},
-  {t:"AI that builds your entire lead gen workflow from a single job description", c:"Automation", w:"Lead generation is just repeatable steps. Automate all of them."},
-  {t:"Tool that completely automates your job application process via n8n and AI tailoring", c:"Automation", w:"Applying to 100 jobs is soul-crushing. Let agents do the heavy lifting."},
-  {t:"AI that sets up your entire new client onboarding sequence from a form submission", c:"Automation", w:"Onboarding delay is the leading cause of early churn."},
-  {t:"Tool that turns any spreadsheet into a scheduled automated report via email", c:"Automation", w:"Most reports are manual. All of them should be automated."},
-  {t:"AI that auto-posts your content across platforms while preserving format per channel", c:"Automation", w:"One piece of content posted everywhere manually takes 45 minutes."},
-  {t:"Tool that monitors your Google Reviews and responds automatically in your tone", c:"Automation", w:"Responding to reviews improves ranking. Manual responses don't scale."},
-  {t:"AI that auto-qualifies inbound leads before a human ever sees them", c:"Automation", w:"Sales teams spend 70% of time on leads that will never close."},
-  {t:"Automation that finds unresponsive leads and re-engages them with a different angle", c:"Automation", w:"Most leads don't convert on the first touch. Or the second. Or the third."},
-  {t:"AI that detects duplicate work across your team and flags it before it's wasted", c:"Automation", w:"Two people solving the same problem is invisible without tooling."},
+      // Extract raw words
+      let words = cleanSentence.match(/\b[a-zA-Z]+\b/g) || [];
+      
+      // Filter for valid candidates (words > 5 letters that aren't stopwords)
+      let candidates = words.filter(w => w.length > 5 && !stopwords.has(w.toLowerCase()));
 
-  // 7. WEB3 / CRYPTO
-  {t:"AI agent that acts as a crypto SDR, finding funded Web3 projects to pitch services", c:"Web3", w:"Web3 companies have treasury funds but no users. Connect the two and take a cut."},
-  {t:"Rug pull risk scorer that analyzes on-chain developer history before you invest", c:"Web3", w:"On-chain data reveals the patterns that influencers try to hide."},
-  {t:"AI that translates complex smart contracts into plain English before you approve a transaction", c:"Web3", w:"Most hacks succeed because users don't read what they're actually approving."},
-  {t:"Web3 job board that matches talent based purely on on-chain contribution history", c:"Web3", w:"GitHub for crypto doesn't exist yet. On-chain activity is the real resume."},
-  {t:"Crypto tax calculator that handles local rules and auto-generates filing exports", c:"Web3", w:"Crypto tax compliance is genuinely complex and almost entirely unserved."},
-  {t:"AI that writes DAO proposals formatted specifically to maximize 'yes' votes", c:"Web3", w:"Most DAO proposals fail because they're written for developers, not voters."},
-  {t:"Tool that monitors a specific wallet and sends you an SMS the second it makes a trade", c:"Web3", w:"Whale watching is profitable if you can react faster than the market."},
-  {t:"SaaS that auto-compounds your staking rewards across multiple chains while you sleep", c:"Web3", w:"Manual compounding costs gas and mental energy. Automate the yield."},
-  {t:"AI that explains any dense crypto whitepaper in 3 simple bullet points", c:"Web3", w:"Most whitepapers are marketing documents dressed as academic papers."},
-  {t:"Tool that aggregates all your fragmented token airdrops into one dashboard to claim", c:"Web3", w:"People leave thousands of dollars in unclaimed airdrops because tracking them is awful."},
+      if (candidates.length > 0) {
+        // Pick the longest word as the target answer (usually the most important concept)
+        let targetWord = candidates.reduce((a, b) => a.length > b.length ? a : b);
+        
+        // Replace the target word with a blank line in the sentence
+        let regex = new RegExp(`\\b${targetWord}\\b`, 'i');
+        let frontHTML = cleanSentence.replace(regex, `<span class="blank">${targetWord}</span>`);
 
-  // 8. PUBLISHING
-  {t:"Tool that splits your trading ebook into a 14-day automated email drip course", c:"Publishing", w:"Some people won't buy a $20 book, but they will give you their email for the same content."},
-  {t:"AI that auto-generates the Amazon KDP listing copy to maximize search CTR", c:"Publishing", w:"A great book with a bad description sells exactly zero copies."},
-  {t:"Automated workflow that requests a review from a Gumroad buyer exactly when they finish", c:"Publishing", w:"Timing the review request is the difference between 5 stars and crickets."},
-  {t:"Tool that monitors Amazon and tells you exactly what non-fiction topic to write next", c:"Publishing", w:"Smart authors don't guess. They write what people are already searching for."},
-  {t:"AI that generates 50 variations of your ebook cover to test via ads before launch", c:"Publishing", w:"People absolutely judge a book by its cover. Test it with data."},
-  {t:"Tool that finds dead links in your old PDFs and automatically pushes an update", c:"Publishing", w:"Digital rot makes old info products look unprofessional."},
-  {t:"Newsletter sponsorship pricing calculator based on your exact niche and open rate", c:"Publishing", w:"Most creators underprice their ad slots by at least 50%."},
-  {t:"AI that takes your long-form newsletter and creates a viral Twitter thread summary", c:"Publishing", w:"The content is written. Now you just need the distribution."},
-  {t:"Automated cross-promotion matchmaker for Substack writers in adjacent niches", c:"Publishing", w:"Growing a newsletter solo is a grind. Audience swapping is a cheat code."},
-  {t:"Tool that turns your top-performing blog posts into a cohesive, printable ebook", c:"Publishing", w:"You've already written the book. It's just scattered across your website."},
+        deck.push({
+          front: frontHTML,
+          back: targetWord
+        });
+      }
+    });
 
-  // 9. FACELESS VIDEO
-  {t:"n8n workflow that generates faceless 30s YouTube Shorts using free AI tools", c:"Faceless Video", w:"Faceless channels are cash cows. The only bottleneck is rendering time."},
-  {t:"AI scriptwriter specifically trained to retain viewer attention past the 3-second hook", c:"Faceless Video", w:"Everyone knows you need a hook. Nobody knows how to keep them watching after it."},
-  {t:"Tool that turns a single podcast video into 15 context-aware, captioned clips for Reels", c:"Faceless Video", w:"Manual clipping takes hours. Context-aware AI clipping takes minutes."},
-  {t:"AI that completely removes dead air and filler words from raw audio in one click", c:"Faceless Video", w:"Editing is 80% cutting out the garbage. Automate the garbage collection."},
-  {t:"Thumbnail A/B tester that auto-swaps the image if CTR is below 4% in the first hour", c:"Faceless Video", w:"The first hour dictates the lifetime of the video. Don't let a bad thumbnail kill it."},
-  {t:"Automated B-roll finder that reads your script and pulls the exact stock footage you need", c:"Faceless Video", w:"Finding the right clip of a 'businessman looking stressed' is the worst part of editing."},
-  {t:"Tool that monitors TikTok trends and tells you which audio to use for your niche today", c:"Faceless Video", w:"Being 48 hours late to an audio trend means getting zero views."},
-  {t:"AI that analyzes your YouTube analytics to tell you the exact minute viewers get bored", c:"Faceless Video", w:"Data-driven storytelling means cutting the boring parts next time."},
-  {t:"Faceless channel manager that auto-schedules, uploads, and SEO-optimizes daily Shorts", c:"Faceless Video", w:"Consistency beats quality in short-form. Automation guarantees consistency."},
-  {t:"AI that clones your voice so you can narrate faceless videos by just typing text", c:"Faceless Video", w:"Save your vocal cords. Edit text, not audio."},
+    if (deck.length === 0) {
+      alert("Couldn't find enough complex concepts in that text. Try pasting a paragraph from a textbook.");
+      return;
+    }
 
-  // 10. LOCAL BIZ
-  {t:"Website-in-a-box that auto-generates a best-in-class local service site in 10 seconds", c:"Local Biz", w:"Local businesses don't want to buy websites. They want to buy phone calls."},
-  {t:"Automated missed-call text back system specifically for plumbers and HVAC", c:"Local Biz", w:"If a plumber doesn't answer, the customer calls the next guy. This saves the lead."},
-  {t:"AI that automatically replies to Google Maps reviews for local restaurants", c:"Local Biz", w:"The algorithm loves active owners. Owners hate logging into Google My Business."},
-  {t:"Tool that pulls local competitor pricing and tells home service pros what to charge", c:"Local Biz", w:"Most local pricing is entirely made up. Data wins."},
-  {t:"AI that turns a contractor's messy before-and-after photos into a slick case study", c:"Local Biz", w:"Contractors do great work and take terrible photos. Fix the presentation, double their rates."},
-  {t:"Automated reactivation SMS sequence for hair salons and barbershops", c:"Local Biz", w:"'It's been 6 weeks since your last cut' is the highest ROI text message a salon can send."},
-  {t:"AI local SEO manager that auto-updates business hours across 50 directories", c:"Local Biz", w:"One wrong holiday hour update costs a business thousands in lost foot traffic."},
-  {t:"AI that listens to inbound sales calls and grades the receptionist's closing rate", c:"Local Biz", w:"Marketing generates the lead. The front desk kills it. Now you have proof."},
-  {t:"Tool that auto-generates a monthly email newsletter for a local landscaping company", c:"Local Biz", w:"Stay top of mind so they don't hire the guy who knocked on their door."},
-  {t:"SaaS that auto-routes incoming leads to the closest available field service tech", c:"Local Biz", w:"Speed to lead wins local business. The closest truck gets the job."},
-
-  // 11. AGENCIES
-  {t:"One-person automation agency in a box: pre-built n8n templates to sell to clients", c:"Agencies", w:"Selling automation is hard. Selling pre-packaged outcomes is easy."},
-  {t:"AI that detects when a client is about to churn based on their email tone", c:"Agencies", w:"Agency churn doesn't happen overnight. It starts with passive-aggressive emails."},
-  {t:"Scope-creep calculator that automatically invoices for 'just one more quick edit'", c:"Agencies", w:"Agencies bleed to death from a thousand tiny favors."},
-  {t:"Tool that generates white-label ROI reports so it looks like your agency did the math", c:"Agencies", w:"Clients don't care how hard you worked. They care about the chart going up and to the right."},
-  {t:"AI that reads a client's brand guidelines and aggressively enforces them on your team's work", c:"Agencies", w:"Revisions kill agency margins. Catch the wrong hex code before the client does."},
-  {t:"Automated case study generator that interviews your client for you via asynchronous video", c:"Agencies", w:"Agencies never have time to market themselves. Automate your own brag sheet."},
-  {t:"AI that drafts the 'we need to raise our prices' email based on inflation and output", c:"Agencies", w:"The hardest email to write, entirely automated and justified with data."},
-  {t:"Lead gen routing workflow that assigns the right SDR based on the prospect's tech stack", c:"Agencies", w:"Send the technical leads to the technical closers."},
-  {t:"AI that audits a prospective client's ad account and builds the exact pitch deck to win them", c:"Agencies", w:"Free audits win deals, but they take hours. This takes 4 minutes."},
-  {t:"SaaS that automatically creates a secure client portal the moment a contract is signed", c:"Agencies", w:"Onboarding sets the tone for the entire relationship. Make it look expensive."},
-
-  // 12. FREELANCING
-  {t:"AI that negotiates your freelance rate on your behalf via email", c:"Freelancing", w:"Most freelancers undercharge because negotiation feels awkward."},
-  {t:"Portfolio generator that shows your work AND the client's measurable ROI", c:"Freelancing", w:"Clients don't buy design. They buy outcomes."},
-  {t:"Client red-flag detector — paste a job post, get a toxicity score", c:"Freelancing", w:"Every freelancer has a horror client story. This prevents the next one."},
-  {t:"AI proposal writer that customizes each pitch from the client's own website copy", c:"Freelancing", w:"Generic proposals lose. Specific proposals win."},
-  {t:"AI retainer pitch generator — converts one-off clients into monthly recurring revenue", c:"Freelancing", w:"One retainer beats ten random projects."},
-  {t:"Tool that finds your ideal client on LinkedIn and drafts the first message", c:"Freelancing", w:"Outreach is math. This makes it faster math."},
-  {t:"AI that packages your freelance skills into a productized service menu", c:"Freelancing", w:"Productizing is how freelancers escape the time-for-money trap."},
-  {t:"Rate calculator that factors in unpaid admin time most freelancers ignore", c:"Freelancing", w:"If you charge $50/hr but 30% is admin, you're earning $35/hr."},
-  {t:"AI that identifies which of your clients is least profitable and most draining", c:"Freelancing", w:"Fire the bottom 20% of clients. Free up 60% of your energy."},
-  {t:"Freelance project post-mortem tool — what went wrong and how to price it next time", c:"Freelancing", w:"Most freelancers finish projects and immediately forget what they learned."},
-
-  // 13. AI AGENTS
-  {t:"AI agent that negotiates lower internet and cable bills for you automatically", c:"AI Agents", w:"You hate calling Comcast. A bot has infinite patience."},
-  {t:"Agent that scans your inbox for receipts and auto-categorizes them in your accounting software", c:"AI Agents", w:"Bookkeeping is a robot's job. Stop doing it manually."},
-  {t:"AI agent that books your flights when the price drops below your exact threshold", c:"AI Agents", w:"Stop checking Google Flights every day. Let the bot do the waiting."},
-  {t:"SaaS agent that handles Tier 1 customer support and only escalates angry users", c:"AI Agents", w:"Filter out the 'reset password' emails so you can handle the real fires."},
-  {t:"AI personal shopper that finds the best quality clothes in your exact measurements on sale", c:"AI Agents", w:"Buying clothes online is a sizing nightmare. Outsource the filtering."},
-  {t:"Agent that researches competitors and drops a 1-page brief in your Slack every Monday", c:"AI Agents", w:"Stay paranoid without doing the actual research."},
-  {t:"AI that auto-applies to hyper-specific remote jobs that fit your exact parameters", c:"AI Agents", w:"Job hunting is a numbers game. Give the bot the parameters and let it run."},
-  {t:"Agent that reads your meeting notes and auto-creates Jira tickets for the engineering team", c:"AI Agents", w:"Translate product meetings into actionable dev work instantly."},
-  {t:"AI agent that acts as a lead generation assistant for boutique marketing firms", c:"AI Agents", w:"Outbound is tedious. An agent can research and draft 100 perfect emails an hour."},
-  {t:"Agent that monitors court filings for mentions of your company or your competitors", c:"AI Agents", w:"Litigation is public, but nobody has time to read it all. The bot does."},
-
-  // 14. E-COMMERCE TOOLS
-  {t:"AI that generates 10 different product descriptions and A/B tests them automatically", c:"E-commerce Tools", w:"Good copy sells products. Testing copy finds the winner."},
-  {t:"Tool that auto-responds to 'Where is my order?' emails with real-time tracking data", c:"E-commerce Tools", w:"WISMO is 50% of all e-commerce support tickets. Automate it completely."},
-  {t:"AI that predicts which customers are about to leave a bad review and intercepts them", c:"E-commerce Tools", w:"Solve the problem privately before it becomes a public 1-star review."},
-  {t:"SaaS that auto-generates custom discount codes for abandoned carts based on cart value", c:"E-commerce Tools", w:"Don't offer 20% off a $5 order. Offer dynamic discounts that protect your margin."},
-  {t:"Tool that analyzes Shopify returns and flags products with a sizing defect", c:"E-commerce Tools", w:"Returns kill e-commerce businesses. Find the root cause faster."},
-  {t:"AI that creates lifestyle product photos from a single basic smartphone picture", c:"E-commerce Tools", w:"Studio photography is expensive. AI backgrounds are cheap and fast."},
-  {t:"SaaS that manages inventory forecasting specifically for viral TikTok products", c:"E-commerce Tools", w:"Going viral is great until you run out of stock and miss $50k in sales."},
-  {t:"Tool that auto-calculates the true landed cost of goods including hidden shipping fees", c:"E-commerce Tools", w:"Most dropshippers think they are profitable until they do the actual math."},
-  {t:"AI that scans competitor stores and alerts you when they run out of stock on a winning item", c:"E-commerce Tools", w:"Their supply chain failure is your immediate ad campaign opportunity."},
-  {t:"SaaS that turns your e-commerce FAQ page into a conversational, selling chatbot", c:"E-commerce Tools", w:"Don't just answer their question. Answer it and suggest an upsell."},
-
-  // 15. CREATOR TOOLS
-  {t:"AI that identifies which topics your audience asks about but you never cover", c:"Creator Tools", w:"Content gaps are where subscriber growth hides."},
-  {t:"Tool that finds your top referenced products and builds an affiliate page automatically", c:"Creator Tools", w:"Passive affiliate income requires zero extra content to create."},
-  {t:"AI that rewrites your old content to match current SEO trends monthly", c:"Creator Tools", w:"Old content decays. Refreshed content compounds."},
-  {t:"AI that generates 90 days of content ideas from a single interview transcript", c:"Creator Tools", w:"The bottleneck is never content. It's always ideas."},
-  {t:"Newsletter subject line optimizer trained on what actually gets opened", c:"Creator Tools", w:"Open rates live or die by the subject line. Most writers guess."},
-  {t:"Tool that repurposes one long YouTube video into 30 days of platform content", c:"Creator Tools", w:"One piece of content. Infinite formats. One afternoon of work."},
-  {t:"AI that turns your podcast into a searchable knowledge base for your audience", c:"Creator Tools", w:"Podcasts are unsearchable. This changes that."},
-  {t:"SaaS that tracks which of your social links is actually driving paying customers", c:"Creator Tools", w:"Likes are vanity. Revenue attribution is sanity."},
-  {t:"AI brand deal pitch writer that actually gets replies from sponsors", c:"Creator Tools", w:"99% of cold sponsor emails go unanswered. Pitch structure is why."},
-  {t:"Tool that auto-generates a media kit from your live social analytics APIs", c:"Creator Tools", w:"Never send an outdated PDF to a sponsor again."},
-
-  // 16. REAL ESTATE TECH
-  {t:"AI that scores Zillow listings for house-flipping potential based on local comps", c:"Real Estate", w:"Flipping is a math problem. Automate the math."},
-  {t:"SaaS that auto-drafts responses to tenant maintenance requests and categorizes urgency", c:"Real Estate", w:"Is it a leaky pipe or a burnt lightbulb? Automate the triage."},
-  {t:"Tool that scans municipal websites for new building permits and alerts contractors", c:"Real Estate", w:"The earliest lead is the permit itself. Get there before your competitors."},
-  {t:"AI that writes glowing real estate listing descriptions from just a list of features", c:"Real Estate", w:"Realtors are great at selling, terrible at creative writing."},
-  {t:"SaaS that automates rent collection and auto-charges late fees without the awkward text", c:"Real Estate", w:"Landlords hate asking for money. Software has no emotions."},
-  {t:"Tool that creates a 3D virtual tour from standard iPhone panoramic photos", c:"Real Estate", w:"Matterport cameras cost $3,000. Your phone is already in your pocket."},
-  {t:"AI that predicts neighborhood gentrification based on new coffee shop openings", c:"Real Estate", w:"Follow the artisan lattes. That's where the property values go up."},
-  {t:"SaaS that manages short-term rental cleaning schedules across multiple booking platforms", c:"Real Estate", w:"A missed cleaning means a 1-star review. Automate the sync."},
-  {t:"Tool that calculates the true ROI of adding an ADU (Accessory Dwelling Unit) to a property", c:"Real Estate", w:"Homeowners want rental income but don't understand the construction costs."},
-  {t:"AI that matches commercial real estate buyers with off-market distressed properties", c:"Real Estate", w:"The best deals never make it to the public listings."},
-
-  // 17. EDUCATION TECH
-  {t:"Skill gap analyzer that maps where you are now to the role you actually want", c:"Education Tech", w:"Career changers waste months studying the wrong things."},
-  {t:"AI that explains any concept using analogies from your specific background", c:"Education Tech", w:"Concepts stick when tied to something you already love."},
-  {t:"AI debate coach that argues the opposite of your position to make you sharper", c:"Education Tech", w:"The best way to strengthen an argument is to stress-test it."},
-  {t:"Language learning app that only teaches words from your own text messages", c:"Education Tech", w:"You learn faster with vocabulary you'll actually use."},
-  {t:"AI that turns any textbook chapter into a 5-minute audio summary", c:"Education Tech", w:"The next generation learns from audio. Textbooks are still text."},
-  {t:"Tool that builds a 30-day crash course from any Wikipedia article", c:"Education Tech", w:"Wikipedia has infinite depth. Nobody knows how to navigate it systematically."},
-  {t:"SaaS that auto-grades coding assignments and provides line-by-line feedback", c:"Education Tech", w:"Teachers spend hours grading syntax errors. AI does it in seconds."},
-  {t:"Tool that generates interactive flashcards directly from a YouTube lecture URL", c:"Education Tech", w:"Watching a video is passive. Flashcards force active recall."},
-  {t:"AI that identifies when a student is zoning out during remote learning and pings them", c:"Education Tech", w:"Zoom fatigue is real. Micro-interventions keep attention high."},
-  {t:"SaaS platform for creators to easily launch cohort-based courses without duct-taping tools", c:"Education Tech", w:"Creators want to teach, not manage Zapier connections."},
-
-  // 18. HEALTH & WELLNESS SAAS
-  {t:"AI that analyzes your grocery receipts and tells you your actual macro breakdown", c:"Health Tech", w:"Logging food manually is tedious. Scanning a receipt is frictionless."},
-  {t:"SaaS for independent therapists to automate HIPAA-compliant client onboarding", c:"Health Tech", w:"Therapists want to help people, not push paperwork."},
-  {t:"Tool that cross-references your supplements to check for negative interactions", c:"Health Tech", w:"People take 10 different pills a day and have no idea if they cancel each other out."},
-  {t:"AI that builds a hyper-customized workout plan based on the specific equipment in your gym", c:"Health Tech", w:"Generic plans fail when someone is using a crowded Planet Fitness."},
-  {t:"SaaS that helps independent personal trainers manage subscriptions and video check-ins", c:"Health Tech", w:"Trainers lose money managing clients via Instagram DMs and Venmo."},
-  {t:"Tool that tracks your sleep data and adjusting your morning alarm to your lightest sleep phase", c:"Health Tech", w:"Waking up groggy is a choice. Data can fix it."},
-  {t:"AI that translates confusing blood test results into a simple, actionable health plan", c:"Health Tech", w:"Doctors give you a printout of numbers. You need to know what to eat."},
-  {t:"SaaS that automates class scheduling and waitlists for boutique yoga studios", c:"Health Tech", w:"Mindbody is clunky and expensive. Build a simpler, faster alternative."},
-  {t:"Tool that monitors your posture via webcam and blurs your screen if you slouch for too long", c:"Health Tech", w:"Physical nudges are the only way to actually fix tech neck."},
-  {t:"AI that generates guided meditations based on your specific daily stressors", c:"Health Tech", w:"A generic breathing exercise won't fix the stress of a bad performance review."},
-
-  // 19. MARKETPLACES
-  {t:"Marketplace for buying and selling profitable newsletters with under 5k subscribers", c:"Marketplaces", w:"Micro-acquisitions are booming. Build the Zillow for newsletters."},
-  {t:"A platform connecting local indie game developers with freelance sound designers", c:"Marketplaces", w:"Good audio makes a game. Good audio engineers are hard to find."},
-  {t:"Marketplace for renting out high-end camera lenses peer-to-peer", c:"Marketplaces", w:"Lenses cost $2,000 and sit in a closet 300 days a year."},
-  {t:"A platform matching retired executives with young founders for fractional mentorship", c:"Marketplaces", w:"Experience is valuable. Access to it shouldn't cost equity."},
-  {t:"Marketplace for buying unused, transferrable SaaS enterprise licenses at a discount", c:"Marketplaces", w:"Companies overbuy seats. Startups want cheaper tools. Connect them."},
-  {t:"A hyper-local marketplace for renting out private backyard pools by the hour", c:"Marketplaces", w:"Public pools are crowded. Private pools are empty. Airbnb for swimming."},
-  {t:"Platform connecting e-commerce brands with UGC (User Generated Content) creators", c:"Marketplaces", w:"Brands need authentic videos. Creators need product deals. Cut out the agency."},
-  {t:"Marketplace for buying and selling custom, highly optimized Notion templates", c:"Marketplaces", w:"Notion is a blank canvas. People will pay $20 to avoid setting it up."},
-  {t:"A platform matching food truck owners with private corporate events looking for catering", c:"Marketplaces", w:"Corporate HR wants cool food. Food trucks want guaranteed payouts."},
-  {t:"Marketplace for buying 'aged' social media accounts with organic history", c:"Marketplaces", w:"Starting from zero is a grind. Marketers will pay to start from 10k."},
-
-  // 20. NEWSLETTERS / MEDIA
-  {t:"A curated weekly newsletter of high-margin physical businesses currently for sale", c:"Newsletters", w:"Everyone looks at SaaS. The real cash flow is in boring local businesses."},
-  {t:"Daily 5-minute audio briefing on specific niche B2B industries (e.g., Logistics Tech)", c:"Newsletters", w:"Professionals want to stay sharp on their commute without reading."},
-  {t:"A newsletter that strictly tears down the pricing pages of successful startups", c:"Newsletters", w:"Pricing strategy is a black box. Open the box."},
-  {t:"Weekly curation of the best, most unhinged cold outreach emails that actually worked", c:"Newsletters", w:"Sales reps are desperate for templates that don't sound like a robot."},
-  {t:"A newsletter tracking the migration of tech workers from major hubs to secondary cities", c:"Newsletters", w:"Real estate investors will pay a premium for demographic trends."},
-  {t:"Daily brief highlighting one obscure piece of software you should be using", c:"Newsletters", w:"Product Hunt is overwhelming. Curate the single best tool of the day."},
-  {t:"A newsletter dedicated entirely to remote work tax loopholes and digital nomad visas", c:"Newsletters", w:"Nomads make great money but have no idea how to legally keep it."},
-  {t:"Weekly roundup of failed startups and the exact reasons why they died", c:"Newsletters", w:"The graveyard of dead startups is the best free research available."},
-  {t:"A newsletter curating the best AI prompts for a specific role (e.g., Prompts for PMs)", c:"Newsletters", w:"Prompt engineering is overwhelming. Give them ready-to-use formulas."},
-  {t:"Weekly deep dive into the business models of wildly successful creator businesses", c:"Newsletters", w:"Creators want to know how MrBeast makes money, not just how he gets views."},
-
-  // 21. RENTALS
-  {t:"Renting out large outdoor movie screens and projectors for backyard parties", c:"Rentals", w:"People want a cinematic experience but don't want to buy a $600 projector."},
-  {t:"A weekend rental service for heavy-duty camping and overlanding gear", c:"Rentals", w:"Camping gear is expensive and takes up garage space. Rent it out."},
-  {t:"Renting high-end espresso machines to offices for 'return to office' days", c:"Rentals", w:"HR is desperate to bribe employees back to the office. Premium caffeine works."},
-  {t:"A subscription library of premium, aesthetic baby toys that parents swap monthly", c:"Rentals", w:"Babies get bored of toys in 3 weeks. Parents hate plastic clutter."},
-  {t:"Tool rental delivery: bringing heavy tillers or power washers directly to homeowners", c:"Rentals", w:"Home Depot rents tools, but you need a truck. Be the delivery layer."},
-  {t:"Renting dead retail space to build an hourly podcast or photo studio", c:"Rentals", w:"Everyone wants to start a podcast. Nobody wants to buy the gear."},
-  {t:"Leasing an empty lot to offer secure, monthly parking for RVs and boats", c:"Rentals", w:"HOAs don't let people park boats in their driveway. Give them a fenced lot."},
-  {t:"Renting out Starlink satellite kits by the weekend for off-grid camping trips", c:"Rentals", w:"People want to unplug in nature, but they also want to post on Instagram."},
-  {t:"A service renting out commercial ozone generators to landlords to remove smoke smells", c:"Rentals", w:"A smell can cost a landlord thousands. Rent the solution for $150 a day."},
-  {t:"Renting out high-end thermal cameras to homeowners checking for insulation leaks", c:"Rentals", w:"The camera costs $2k. The rental is $100. It pays for itself in 20 weekends."},
-
-  // 22. B2B SERVICES
-  {t:"Premium cable management service for messy corporate and home offices", c:"B2B Services", w:"Nobody respects a CEO with a rat's nest of HDMI cables under their desk."},
-  {t:"Indoor plant watering subscription for local creative agencies and cafes", c:"B2B Services", w:"Agencies buy $300 monsteras and let them die. Keep them alive for $100/month."},
-  {t:"Mobile ergonomic desk audits: adjusting chairs and monitors for office workers", c:"B2B Services", w:"Fixing the monitor height costs $150 once and solves the root cause of back pain."},
-  {t:"Physical, secure document shredding with a guaranteed destruction certificate", c:"B2B Services", w:"Accountants have extreme paranoia about physical documents. Sell certainty."},
-  {t:"White-glove office moving: packing and setting up employee desks exactly how they were", c:"B2B Services", w:"Moving offices destroys productivity. Set up the monitors so they work on day one."},
-  {t:"Acoustic treatment installation for wealthy remote workers sick of echoey Zoom calls", c:"B2B Services", w:"They spent $3k on a laptop and sound like they are broadcasting from a bathroom."},
-  {t:"Mobile EV charging station repair and cord-replacement service for local businesses", c:"B2B Services", w:"Public chargers are constantly broken. Be the contractor they call."},
-  {t:"Deep cleaning and recalibration for $20k commercial espresso machines in cafes", c:"B2B Services", w:"Coffee shops live and die by their machine. A monthly contract is cheap insurance."},
-  {t:"Temporary fencing rental and setup for small local commercial construction sites", c:"B2B Services", w:"Contractors need to secure their tools but don't want to buy fencing."},
-  {t:"Commercial pressure washing specifically for drive-thrus and greasy dumpster pads", c:"B2B Services", w:"Fast food owners get fined for dirty lots. Wash it at night while they sleep."},
-
-  // 23. HOME SERVICES
-  {t:"A subscription service that power-washes the neighborhood's garbage cans once a month", c:"Home Services", w:"Garbage cans smell awful in the summer. Suburbanites will pay $15/month to fix it."},
-  {t:"Parking lot line striping for local strip malls with a simple push-painter", c:"Home Services", w:"A bucket of paint and a machine costs $200. Restriping a tired lot pays $1,500."},
-  {t:"Gutter cleaning using commercial ground vacuums (zero ladder risk)", c:"Home Services", w:"Homeowners are terrified of ladders. Provide the service safely from the ground."},
-  {t:"Mobile knife and tool sharpening service posted up at local farmers markets", c:"Home Services", w:"Amateur home chefs buy $200 Japanese knives and let them go dull."},
-  {t:"High-end barbecue grill deep-cleaning service right before summer starts", c:"Home Services", w:"Nobody wants to scrape last year's grease off their Weber grill. Charge $150."},
-  {t:"Changing out air filters and smoke detector batteries for elderly homeowners", c:"Home Services", w:"Climbing ladders is dangerous for older folks. Provide a recurring safety check."},
-  {t:"Restoration and polishing service for faded, hazy headlights in suburban driveways", c:"Home Services", w:"Hazy headlights make a car look cheap. Restoring it takes 20 minutes."},
-  {t:"Routine sanitization and descaling for high-end home nugget ice makers", c:"Home Services", w:"People pay $500 for aesthetic ice machines and never clean the mold out."},
-  {t:"Residential solar panel cleaning service using extended soft-brush water poles", c:"Home Services", w:"Dirty panels lose 20% efficiency. You're selling their electricity back to them."},
-  {t:"Installing heavy-duty deadbolts and security window film for new homeowners", c:"Home Services", w:"New homeowners are terrified of break-ins. Sell them upgraded physical security."},
-
-  // 24. LOGISTICS
-  {t:"A hyper-local courier service exclusively for emergency forgotten items", c:"Logistics", w:"Anxiety is a high-converting emotion. Price sensitivity drops to zero."},
-  {t:"A moving service exclusively for highly fragile, large indoor exotic plants", c:"Logistics", w:"Standard movers will murder a 10-year-old plant. Millennials will pay to protect it."},
-  {t:"Discreet removal and disposal service for giant, embarrassing impulse purchases", c:"Logistics", w:"People buy Peloton bikes and feel guilty looking at them. Remove the guilt."},
-  {t:"A specialized transport service for delivering and setting up elaborate wedding cakes", c:"Logistics", w:"A bakery spends 20 hours on a cake and risks ruining it in a sedan. Take the risk."},
-  {t:"Pallet hauling route: connecting warehouses with trash pallets to recyclers who buy them", c:"Logistics", w:"Warehouses have trash. Recyclers buy trash. You are the middleman with a truck."},
-  {t:"Last-mile retrieval service for lost airport luggage that airlines refuse to deliver", c:"Logistics", w:"Charge $150 to wait in the baggage claim line for people whose bags were lost."},
-  {t:"A local mail-forwarding service that repackages and anonymizes online purchases", c:"Logistics", w:"People buy weird things and don't want the delivery driver knowing what's in the box."},
-  {t:"Subleasing unused warehouse corners as micro-fulfillment centers for indie brands", c:"Logistics", w:"E-commerce founders will pay a premium to get the boxes out of their garage."},
-  {t:"A concierge junk removal service specifically for tech e-waste and old monitors", c:"Logistics", w:"You can't just throw laptops in the trash. Safely recycle them for a fee."},
-  {t:"Hyper-local 'welcome to the neighborhood' gift basket delivery for local realtors", c:"Logistics", w:"Realtors want to give closing gifts but have no time to assemble or deliver them."},
-
-  // 25. LEISURE & MANUFACTURING
-  {t:"A mobile, pop-up cigar and whiskey bar for local weddings", c:"Leisure", w:"Groomsmen want to feel like mob bosses for an hour. Charge a $1,000 minimum."},
-  {t:"A craft ice company delivering perfectly clear, hand-cut ice to cocktail bars", c:"Leisure", w:"Bars want to charge $18 for an Old Fashioned. They can't do that with cloudy ice."},
-  {t:"Vending machines that only sell premium mocktails and healthy snacks in gyms", c:"Leisure", w:"People leaving the gym want a reward, but tap water doesn't cut it."},
-  {t:"A mobile axe-throwing trailer rented out for corporate team-building events", c:"Leisure", w:"Corporate wellness programs offer yoga. Sometimes teams just want to throw axes."},
-  {t:"Curating and delivering obscure, high-caffeine international energy drinks to devs", c:"Leisure", w:"Red Bull is boring. Give devs something imported from Japan."},
-  {t:"3D printing replacement clips and knobs for discontinued home appliances", c:"Manufacturing", w:"A $0.50 plastic gear breaking turns a $500 mixer into trash. Print it for $40."},
-  {t:"Building simple, modular wooden shelving units for local delivery vans", c:"Manufacturing", w:"Custom metal van shelving costs $3k. Build sturdy plywood shelves for $800."},
-  {t:"Assembling and tuning custom mechanical keyboards for tech workers", c:"Manufacturing", w:"Typing is the only physical thing tech workers do. They will pay for the 'thock'."},
-  {t:"Upcycling discarded corporate office chairs and flipping on Facebook Marketplace", c:"Manufacturing", w:"Corporations throw away Herman Millers. Rescue, deep clean, and flip them."},
-  {t:"Creating and selling pre-made 'date night in a box' kits for local couples", c:"Manufacturing", w:"Couples are exhausted by Friday. Deliver the game, snack, and activity to their door."},
-  // 26. PRODUCTIVITY
-  {t:"Tool that blocks all websites except Google Docs until you hit a word count", c:"Productivity", w:"Willpower is a myth. Force yourself into deep work."},
-  {t:"App that auto-declines calendar invites if they don't have an agenda", c:"Productivity", w:"No agenda, no meeting. Let the software be the bad guy."},
-  {t:"AI that summarizes your 50 unread browser tabs into one paragraph", c:"Productivity", w:"Tab hoarding is just digital anxiety. Clear it out instantly."},
-  {t:"Simple to-do list that deletes tasks if you postpone them 3 times", c:"Productivity", w:"If you keep delaying it, it's not important. Delete it."},
-  {t:"Pomodoro timer that donates $1 to a charity you hate if you pause it", c:"Productivity", w:"Financial loss aversion is the greatest motivator known to man."},
-  {t:"App that auto-closes Slack and emails during your scheduled deep work blocks", c:"Productivity", w:"You can't do deep work if you're answering quick questions."},
-  {t:"Tool that calculates the hourly cost of the meeting you're currently in", c:"Productivity", w:"Once managers see a 30-minute sync costs $600, they stop scheduling them."},
-  {t:"Habit tracker that only lets you log off when you complete the daily goal", c:"Productivity", w:"Make the good habit the only way to access your leisure time."},
-  {t:"AI that drafts your daily standup update based on your GitHub/Figma activity", c:"Productivity", w:"Stop trying to remember what you did yesterday. The data knows."},
-  {t:"Screen time app that replaces your feed with a blank screen after 15 mins", c:"Productivity", w:"Doomscrolling happens because there's no friction. Add friction."},
-
-  // 27. PET CARE
-  {t:"Mobile dog gym inside a retrofitted delivery van for busy owners", c:"Pet Care", w:"Tech workers feel guilty their dogs are bored. Bring the treadmill to their driveway."},
-  {t:"Gourmet, human-grade meal prep delivery just for senior dogs", c:"Pet Care", w:"People will spend more on their dog's health than their own."},
-  {t:"Airbnb but for safe, fenced backyards so reactive dogs can run", c:"Pet Care", w:"Reactive dogs can't go to public parks. Rent them a private hour of joy."},
-  {t:"Automated pooper-scooper robot rental for suburban backyards", c:"Pet Care", w:"Nobody wants to clean the yard. Rent the hardware that does it."},
-  {t:"Niche matchmaking service for pet owners looking for reliable local sitters", c:"Pet Care", w:"Rover is a coin flip. Curate the top 10% of sitters and charge a premium."},
-  {t:"Subscription box for tough-chewer dog toys that actually last a month", c:"Pet Care", w:"Pitbull owners destroy $20 toys in five minutes. Solve the durability problem."},
-  {t:"Mobile pet photography studio that sets up at the local dog park", c:"Pet Care", w:"People want aesthetic photos of their pets but won't book a studio. Go to them."},
-  {t:"GPS collar rental service for people taking their indoor cats camping", c:"Pet Care", w:"Losing a pet in the woods is a nightmare. Rent the peace of mind."},
-  {t:"Specialized deep-cleaning service for cars absolutely ruined by pet hair", c:"Pet Care", w:"Standard detailers charge extra for pet hair. Make it your entire brand."},
-  {t:"Dog-walking agency that sends you an AI-generated summary of the walk's route", c:"Pet Care", w:"Owners want to know their dog actually walked 2 miles, not just stood outside."},
-
-  // 28. EVENTS
-  {t:"Micro-wedding planner that specializes in 20-person aesthetic ceremonies", c:"Events", w:"Huge weddings are stressful and expensive. Intimate, highly aesthetic weddings are booming."},
-  {t:"Pop-up picnic company that sets up aesthetic beach dates and cleans up after", c:"Events", w:"Guys want to plan a romantic date but have no design skills. Do it for them."},
-  {t:"Corporate retreat agency that only books off-grid cabins with zero Wi-Fi", c:"Events", w:"Teams don't bond when they are checking Slack. Force them off the grid."},
-  {t:"Renting out luxury porta-potties for high-end outdoor weddings", c:"Events", w:"A $50k wedding shouldn't have a plastic blue box. Rent the premium trailers."},
-  {t:"A service that hires reliable people to wait in line for hyped local events", c:"Events", w:"Sneaker drops and restaurant openings take hours. Rich people will pay to skip the line."},
-  {t:"Tool that auto-syncs a wedding hashtag to a shared Google Drive folder", c:"Events", w:"Getting photos from 100 guests is a nightmare. Automate the collection."},
-  {t:"Mobile mocktail bartending service for baby showers and corporate mornings", c:"Events", w:"Not every event needs alcohol. Provide a high-end, zero-proof experience."},
-  {t:"B2B service that sets up physical photo booths in office break rooms", c:"Events", w:"Companies want culture. A physical photo booth makes the office feel fun."},
-  {t:"Silent disco equipment rental delivered directly to house parties", c:"Events", w:"Throw a massive party without the cops being called for noise complaints."},
-  {t:"Specialized clean-up crew that only handles the morning after massive parties", c:"Events", w:"The hangover is bad enough. Don't make them mop the sticky floors."},
-
-  // 29. PERSONAL BRAND
-  {t:"Ghostwriting service exclusively for introverted tech founders on LinkedIn", c:"Personal Brand", w:"Founders know they need to post, but they hate writing about themselves."},
-  {t:"Tool that auto-replies to LinkedIn connection requests with a polite filter", c:"Personal Brand", w:"Filter out the generic sales pitches before they hit your inbox."},
-  {t:"Service that scrubs your old, embarrassing tweets before you fundraise", c:"Personal Brand", w:"A bad joke from 2014 shouldn't ruin your seed round. Automate the deletion."},
-  {t:"AI that turns your resume into a sleek, personal landing page in one click", c:"Personal Brand", w:"PDFs are dead. A personal website makes you look like a premium hire."},
-  {t:"Agency that strictly optimizes the Wikipedia pages of minor local celebrities", c:"Personal Brand", w:"Wikipedia dictates Google's knowledge graph. Control the narrative."},
-  {t:"Tool that tracks your personal name mentions across obscure industry blogs", c:"Personal Brand", w:"Google Alerts is broken. Build a scraper that actually finds your mentions."},
-  {t:"Service that records your Zoom presentations and cuts them into hype reels", c:"Personal Brand", w:"Speakers need a sizzle reel to get booked. Use the footage they already have."},
-  {t:"Newsletter that tells you exactly which industry awards you should apply for", c:"Personal Brand", w:"Awards are just marketing. Tell founders which ones are easy to win."},
-  {t:"Agency that books podcast guest spots for local B2B business owners", c:"Personal Brand", w:"Being a guest is free advertising. But finding the podcasts takes hours."},
-  {t:"AI tool that suggests daily tweet ideas based on your specific job title", c:"Personal Brand", w:"The blank page is intimidating. Give them a prompt to react to."},
-
-  // 30. COPYWRITING
-  {t:"Service that rewrites your boring 'About Us' page to sound like a human wrote it", c:"Copywriting", w:"Most corporate pages sound like they were written by a legal team. Inject personality."},
-  {t:"Freelancer who only writes highly converting abandoned cart emails", c:"Copywriting", w:"E-commerce stores leave thousands on the table. Offer to write the emails for a cut."},
-  {t:"Tool that generates 10 different hook variations for your TikTok script", c:"Copywriting", w:"If the first 3 seconds fail, the video dies. Test the hooks."},
-  {t:"Agency that translates tech jargon into simple English for sales decks", c:"Copywriting", w:"Engineers build great features. Sales needs to sell the benefits."},
-  {t:"Service that audits your competitor's ad copy and tells you why it's working", c:"Copywriting", w:"Don't guess what converts. Reverse-engineer the ads they've been running for months."},
-  {t:"Freelancer specializing entirely in writing Kickstarter campaign pages", c:"Copywriting", w:"A hardware launch lives or dies by the campaign copy. Be the expert."},
-  {t:"AI that scans your blog and highlights sentences that are too hard to read", c:"Copywriting", w:"People read at an 8th-grade level online. Simplify the text."},
-  {t:"Service that turns boring whitepapers into punchy 5-email drip sequences", c:"Copywriting", w:"Nobody reads a 40-page PDF. Everyone reads a 200-word daily email."},
-  {t:"Copywriter who exclusively writes Tinder bios for busy professionals", c:"Copywriting", w:"Dating is a marketing funnel. Optimize the top of the funnel."},
-  {t:"Agency that rewrites real estate listings to focus on the neighborhood vibe", c:"Copywriting", w:"Don't sell the square footage. Sell the coffee shop down the street."},
-
-  // 31. NO-CODE
-  {t:"Agency that builds internal company directories using Softr and Airtable", c:"No-Code", w:"HR portals are clunky. Build a clean, modern one in a weekend."},
-  {t:"Freelancer who turns messy Google Sheets into sleek Glide apps for local biz", c:"No-Code", w:"Local businesses run on spreadsheets. Give them an app interface for $500."},
-  {t:"Service that sets up automated client intake portals using Notion", c:"No-Code", w:"Onboarding clients via email chains is unprofessional. Build them a portal."},
-  {t:"Agency that completely replaces a company's Zendesk with a custom Bubble app", c:"No-Code", w:"Enterprise tools are bloated. Build exactly what they need and nothing else."},
-  {t:"Freelancer who builds custom Zapier integrations for non-technical realtors", c:"No-Code", w:"Realtors lose leads because they don't sync their forms to their CRM. Fix it."},
-  {t:"Tool that monitors your Make.com scenarios and alerts you when they break", c:"No-Code", w:"Automations run silently until they crash. Build a monitoring layer."},
-  {t:"Agency that builds custom CRM dashboards for agencies using Retool", c:"No-Code", w:"Off-the-shelf CRMs never perfectly fit an agency's workflow."},
-  {t:"Service that creates automated invoice generation systems for freelancers", c:"No-Code", w:"Stop doing math at the end of the month. Connect the time-tracker to Stripe."},
-  {t:"Freelancer who exclusively builds Carrd landing pages for new app launches", c:"No-Code", w:"Founders need to collect emails before the app is built. Build the waitlist page."},
-  {t:"Agency that sets up automated employee onboarding workflows in Airtable", c:"No-Code", w:"Don't let new hires sit around on day one. Automate their software access."},
-
-  // 32. AUDIO
-  {t:"Service that professionally edits out the 'ums' and 'ahs' from indie podcasts", c:"Audio", w:"Filler words make hosts sound unconfident. Clean it up."},
-  {t:"Agency that writes show notes and timestamps for busy podcast hosts", c:"Audio", w:"Recording is fun. Writing the description is a chore. Take the chore."},
-  {t:"Tool that automatically normalizes audio levels for amateur video creators", c:"Audio", w:"One speaker is too quiet, the other is too loud. Fix it with software."},
-  {t:"Service that turns written blog posts into human-narrated audio articles", c:"Audio", w:"People want to listen while they commute. Give the blog an audio player."},
-  {t:"Freelancer who creates custom intro/outro music for niche YouTube channels", c:"Audio", w:"Stock music sounds cheap. A custom $100 intro elevates the brand."},
-  {t:"Agency that pitches your podcast to get featured on other newsletters", c:"Audio", w:"Cross-promotion is the only way to grow an indie podcast. Do the outreach."},
-  {t:"Service that creates 15-second audiograms for Instagram from long episodes", c:"Audio", w:"Podcasts have zero virality. Audiograms create social loops."},
-  {t:"Tool that auto-generates SEO-optimized titles for your podcast episodes", c:"Audio", w:"'Episode 4: Interview with John' gets zero searches. Fix the titles."},
-  {t:"Freelancer who completely overhauls your home office acoustic treatment", c:"Audio", w:"A $500 mic sounds terrible in an echoey room. Fix the room."},
-  {t:"Agency that monetizes your dead podcast backlog by inserting dynamic ads", c:"Audio", w:"Old episodes still get downloads. Retroactively monetize them."},
-
-  // 33. FITNESS
-  {t:"App that matches you with a gym buddy who has the exact same schedule", c:"Fitness", w:"Accountability is the only thing that keeps people going to the gym."},
-  {t:"Niche coaching for tech workers trying to fix their terrible desk posture", c:"Fitness", w:"Tech neck is an epidemic. Sell a 30-day mobility protocol."},
-  {t:"Service that delivers pre-weighed, macro-counted meals to local crossfit gyms", c:"Fitness", w:"Crossfitters track everything. Make eating perfectly frictionless."},
-  {t:"Agency that manages the Instagram accounts of independent personal trainers", c:"Fitness", w:"Trainers need to post workout clips but don't have time to edit them."},
-  {t:"Tool that auto-generates workout programs based on a hotel gym's equipment", c:"Fitness", w:"Consultants lose their gains because hotel gyms only have dumbbells. Fix it."},
-  {t:"Freelancer who builds custom Notion templates for tracking powerlifting stats", c:"Fitness", w:"Spreadsheets are ugly. Build a premium tracking dashboard."},
-  {t:"Service that repairs and maintains treadmills for boutique local gyms", c:"Fitness", w:"When a machine breaks, members complain. Be the guy who fixes it same-day."},
-  {t:"Subscription box for obscure, high-quality protein bars from around the world", c:"Fitness", w:"People get sick of the same grocery store protein bars."},
-  {t:"Niche coaching program for new dads trying to get back in shape at home", c:"Fitness", w:"Dad bods are just a lack of time. Build a 20-minute kettlebell program."},
-  {t:"App that charges you $5 every time you skip a scheduled morning run", c:"Fitness", w:"Financial pain is a better motivator than intrinsic goals."},
-
-  // 34. SECURITY
-  {t:"Service that helps older adults properly set up password managers", c:"Security", w:"Everyone knows they need one. Nobody wants to spend the hour setting it up."},
-  {t:"Agency that runs mock phishing campaigns on your employees to test them", c:"Security", w:"One clicked link ruins the company. Find out who the weak link is."},
-  {t:"Tool that auto-deletes your account on websites you haven't visited in a year", c:"Security", w:"Data breaches happen on accounts you forgot you even had. Clean them up."},
-  {t:"Freelancer who sets up localized, encrypted hard drive backups for small biz", c:"Security", w:"Cloud is great, but local encrypted backups are essential for ransomware recovery."},
-  {t:"Service that scrubs your home address and phone number from data brokers", c:"Security", w:"Anyone can buy your address for $2 online. Automate the opt-out requests."},
-  {t:"Agency that physically destroys old corporate hard drives with a certificate", c:"Security", w:"You can't just throw an old work laptop in the dumpster. Shred the drive."},
-  {t:"Tool that scans your inbox for old passwords sent in plain text and flags them", c:"Security", w:"You emailed yourself a password in 2018 and it's still sitting there. Delete it."},
-  {t:"Freelancer who audits the smart home security cameras of wealthy clients", c:"Security", w:"People install Ring cameras and leave the default passwords. Secure the network."},
-  {t:"App that generates burner email addresses for signing up to newsletters", c:"Security", w:"Stop giving away your real email to get a 10% discount code."},
-  {t:"Service that secures the social media accounts of high-profile creators", c:"Security", w:"Getting hacked costs creators thousands. Set up hardware keys for them."},
-
-  // 35. E-COMMERCE
-  {t:"Niche store selling only ultra-premium, aesthetic desk mats for tech workers", c:"E-commerce", w:"The desk is a tech worker's sanctuary. Sell them a $60 leather mat."},
-  {t:"Service that takes terrible manufacturer photos and photoshops lifestyle shots", c:"E-commerce", w:"Alibaba photos don't sell. Put the product in a real-looking environment."},
-  {t:"Freelance agency that exclusively optimizes Shopify store loading speeds", c:"E-commerce", w:"Every second of delay drops conversion rates. Speed is revenue."},
-  {t:"Store selling single-ingredient dog treats sourced directly from local farms", c:"E-commerce", w:"Pet owners are terrified of mass-produced treats. Sell transparency."},
-  {t:"Agency that sets up post-purchase upsell funnels for small D2C brands", c:"E-commerce", w:"The easiest time to sell is right after they already bought. Add the upsell."},
-  {t:"Service that unboxes and tests viral TikTok products to prove if they work", c:"E-commerce", w:"Trust is zero online. Build a review site that actually tests the dropship junk."},
-  {t:"Store selling high-quality, blank streetwear blanks for local clothing brands", c:"E-commerce", w:"Every indie brand prints on cheap Gildan shirts. Provide a premium alternative."},
-  {t:"Freelancer who manages the complicated sales tax filings for Shopify owners", c:"E-commerce", w:"Nexus tax laws are a nightmare for e-commerce. Take the headache away."},
-  {t:"Niche store selling only specialized tools for left-handed people", c:"E-commerce", w:"10% of the world is left-handed and everyday objects are annoying for them."},
-  {t:"Agency that writes product descriptions that actually rank for long-tail SEO", c:"E-commerce", w:"Stop writing generic descriptions. Rank for 'best blue light glasses for coders'."},
-
-  // 36. COMMUNITIES
-  {t:"Paid Discord server exclusively for solo founders to co-work silently on voice", c:"Communities", w:"Working alone is isolating. The sound of others typing is highly motivating."},
-  {t:"Niche community for people trying to leave the tech industry for blue-collar jobs", c:"Communities", w:"Burnout is real. People want to know how to transition to plumbing or electrical."},
-  {t:"Paid Slack group for freelance designers to share contracts and pricing tips", c:"Communities", w:"Freelancers operate in the dark. A community provides pricing transparency."},
-  {t:"Local mastermind group for home service business owners to trade leads", c:"Communities", w:"The plumber gives leads to the electrician. Monetize the network."},
-  {t:"Paid community for amateur real estate investors to analyze deals together", c:"Communities", w:"Nobody wants to buy their first rental property without someone checking the math."},
-  {t:"Agency that sets up and moderates Skool communities for big creators", c:"Communities", w:"Creators want the recurring revenue, but they don't want to moderate the trolls."},
-  {t:"Service that revives dead Facebook groups by running engagement campaigns", c:"Communities", w:"Old Facebook groups have thousands of members but zero activity. Wake them up."},
-  {t:"Paid newsletter and community for expats navigating taxes abroad", c:"Communities", w:"Living in Spain is great until the IRS calls. Build a community of tax survival."},
-  {t:"Niche forum for people who repair vintage espresso machines", c:"Communities", w:"Highly specific hobbies need highly specific forums. Gate the high-end advice."},
-  {t:"Tool that auto-welcomes new Discord members and asks them their goals", c:"Communities", w:"Onboarding is why most communities fail. Make every new member feel seen."},
-
-  // 37. SUBSCRIPTIONS
-  {t:"Monthly box of aesthetic, high-quality stationery for remote workers", c:"Subscriptions", w:"Even in a digital world, people love a $30 Japanese notebook and a good pen."},
-  {t:"Subscription that sends you a new, hard-to-kill houseplant every quarter", c:"Subscriptions", w:"People want green spaces but lack a green thumb. Send the survivors."},
-  {t:"Monthly delivery of specialty roasted coffee from a different country each time", c:"Subscriptions", w:"Coffee lovers want variety without having to research it themselves."},
-  {t:"Subscription box of sensory toys and tools specifically for neurodivergent adults", c:"Subscriptions", w:"Fidgets aren't just for kids. Curate aesthetic, silent tools for the office."},
-  {t:"Monthly curated selection of local craft hot sauces sent to your door", c:"Subscriptions", w:"Hot sauce has a cult following. Discovering new local batches is the whole appeal."},
-  {t:"Subscription that sends a fresh pair of high-quality running socks every month", c:"Subscriptions", w:"Runners burn through socks. Make the replacement automatic."},
-  {t:"Monthly box of obscure, international snacks you can't buy at the grocery store", c:"Subscriptions", w:"People pay for the novelty of trying something completely foreign."},
-  {t:"Subscription that delivers premium razor blades without the pink tax for women", c:"Subscriptions", w:"Shaving shouldn't cost 20% more just because the plastic is pink."},
-  {t:"Monthly delivery of pre-measured cocktail ingredients and recipes", c:"Subscriptions", w:"People want to make a great Negroni without buying a $40 bottle of Campari."},
-  {t:"Subscription box of niche, high-end guitar picks and strings for musicians", c:"Subscriptions", w:"Strings break. Picks vanish into the void. Automate the essentials."},
-
-  // 38. TRAVEL
-  {t:"Agency that plans entire vacations specifically around your dietary restrictions", c:"Travel", w:"Traveling as a celiac is terrifying. Plan the safe restaurants for them."},
-  {t:"Service that books surprise weekend getaways based on a strict $500 budget", c:"Travel", w:"Decision fatigue ruins vacations. Take their money and surprise them."},
-  {t:"Niche travel agent specializing in 'digital detox' cabins with zero cell service", c:"Travel", w:"Burnout is at an all-time high. Sell the absolute absence of notifications."},
-  {t:"Tool that monitors airline pricing for your specific route and texts you to buy", c:"Travel", w:"Stop checking Google Flights every day. Let the bot do the waiting."},
-  {t:"Agency that curates hyper-local food tours for solo travelers in major cities", c:"Travel", w:"Solo travelers want to eat well but feel awkward. Group them up."},
-  {t:"Service that helps digital nomads navigate complex visa applications", c:"Travel", w:"Applying for a digital nomad visa is bureaucratic hell. Charge to hold their hand."},
-  {t:"App that maps out the best local coffee shops with verified fast Wi-Fi", c:"Travel", w:"Working remotely fails when the cafe's internet drops. Verify the speeds."},
-  {t:"Agency that plans elaborate bachelorette parties in secondary cities", c:"Travel", w:"Nashville is too expensive. Plan the ultimate weekend in Boise or Omaha."},
-  {t:"Service that rents out customized, fully stocked camper vans for road trips", c:"Travel", w:"People want the van life aesthetic for the weekend without buying a $80k Sprinter."},
-  {t:"Niche guide service for photographers looking for hidden landscape spots", c:"Travel", w:"Photographers don't want the tourist spots. Sell them the coordinates to the hidden ones."},
-
-  // 39. PHOTOGRAPHY
-  {t:"Freelancer who exclusively takes professional dating app photos for men", c:"Photography", w:"Most guys have terrible selfies. A $200 photoshoot fundamentally changes their matches."},
-  {t:"Service that converts old family VHS tapes into organized, cloud-based files", c:"Photography", w:"VHS tapes degrade. Digitize the memories before they are lost forever."},
-  {t:"Agency that provides on-demand, candid iPhone photographers for events", c:"Photography", w:"People want aesthetic photos instantly for Instagram, not 3 weeks later from a DSLR."},
-  {t:"Niche photographer specializing in high-end food shots for UberEats menus", c:"Photography", w:"Restaurants with bad photos get zero orders. Good photos pay for themselves instantly."},
-  {t:"Service that color-grades your raw travel photos so they look cinematic", c:"Photography", w:"People take great shots but don't know how to edit them. Do the Lightroom work."},
-  {t:"Freelancer who takes aesthetic, well-lit photos of cars for people selling them", c:"Photography", w:"A clean photo adds $1,000 to the perceived value of a used car on Facebook."},
-  {t:"Agency that provides professional headshots directly inside corporate offices", c:"Photography", w:"Employees won't go to a studio. Bring the backdrop to the breakroom."},
-  {t:"Service that restores and colorizes torn, black-and-white family photos", c:"Photography", w:"AI tools make this easy now. Charge a premium for the emotional restoration."},
-  {t:"Niche photographer specializing in product shots for Amazon FBA sellers", c:"Photography", w:"Amazon shoppers buy based on the main image. Make it pop against the white background."},
-  {t:"Tool that automatically sorts your thousands of iPhone photos by face and location", c:"Photography", w:"Camera rolls are a black hole. Organize the chaos automatically."},
-
-  // 40. FINANCE
-  {t:"Coach who helps high-earning tech workers budget without feeling restricted", c:"Finance", w:"Earning $200k means nothing if you spend $210k. Teach them cash flow."},
-  {t:"Service that analyzes your past year's spending and cancels unused subscriptions", c:"Finance", w:"People avoid their bank statements out of anxiety. Do the audit for them."},
-  {t:"Niche bookkeeping agency strictly for independent Twitch streamers", c:"Finance", w:"Streamers make chaotic income across 5 platforms. Organize it for tax season."},
-  {t:"Freelancer who helps young couples combine their finances without arguing", c:"Finance", w:"Money is the #1 cause of divorce. Be the neutral third-party mediator."},
-  {t:"Service that negotiates your medical bills down on a percentage basis", c:"Finance", w:"Hospitals overcharge. Take a 30% cut of whatever you save the patient."},
-  {t:"Agency that prepares financial models specifically for SaaS pitch decks", c:"Finance", w:"Founders are great at product, terrible at Excel. Build the model for the VCs."},
-  {t:"Coach who helps freelancers build a 6-month emergency runway", c:"Finance", w:"Freelance income is feast or famine. Teach them how to survive the famine."},
-  {t:"Tool that auto-categorizes your business expenses for end-of-year tax prep", c:"Finance", w:"Stop sorting receipts in December. Automate the rules in January."},
-  {t:"Service that audits your 401k to see how much you're losing in hidden fees", c:"Finance", w:"A 1% fee costs hundreds of thousands over a lifetime. Show them the math."},
-  {t:"Freelancer who sets up automated 'profit first' banking systems for local biz", c:"Finance", w:"Business owners look at the top line and forget the bottom line. Fix the accounts."},
-
-  // 41. LEGAL
-  {t:"Pack of simple, plain-English contract templates for freelance designers", c:"Legal", w:"Lawyers cost $300/hr. A solid template pack costs $50. Sell the templates."},
-  {t:"Niche website selling privacy policy templates specifically for AI SaaS apps", c:"Legal", w:"AI laws are confusing. Give founders a template that actually covers them."},
-  {t:"Service that auto-generates NDAs that don't sound completely terrifying", c:"Legal", w:"Overly aggressive NDAs kill early partnership talks. Soften the language."},
-  {t:"Tool that scans your website to make sure it's actually GDPR compliant", c:"Legal", w:"Nobody understands cookie laws. Automate the compliance check."},
-  {t:"Pack of templates for landlords dealing with tricky tenant communications", c:"Legal", w:"Saying the wrong thing to a tenant gets you sued. Sell the exact scripts."},
-  {t:"Legal bundle specifically for creators signing their first brand sponsorships", c:"Legal", w:"Creators get screwed on perpetual usage rights. Teach them what to cross out."},
-  {t:"Service that helps you file your LLC paperwork without the massive upcharges", c:"Legal", w:"LegalZoom charges crazy fees. Build a streamlined, cheaper alternative."},
-  {t:"Templates for agency owners to protect themselves from severe scope creep", c:"Legal", w:"The contract is the only thing standing between profit and endless revisions."},
-  {t:"Tool that auto-generates a terms of service page based on your app's features", c:"Legal", w:"Founders copy/paste from competitors. That's dangerous. Build a generator."},
-  {t:"Legal guide and templates for setting up a bulletproof influencer giveaway", c:"Legal", w:"Running a lottery illegally is a huge fine. Sell the rules to run it legally."},
-
-  // 42. DATA
-  {t:"Freelancer who builds live KPI dashboards in Looker for local businesses", c:"Data", w:"Owners fly blind. Put their revenue and costs on one screen."},
-  {t:"Service that cleans up messy CRM data so your sales team stops complaining", c:"Data", w:"Duplicates and empty fields ruin CRMs. Be the janitor that fixes the database."},
-  {t:"Agency that turns your boring monthly reports into interactive, visual dashboards", c:"Data", w:"Clients don't read spreadsheets. They look at charts. Make the charts pretty."},
-  {t:"Tool that scrapes your competitors' pricing pages and tracks changes over time", c:"Data", w:"Don't get undercut without knowing. Track the price wars automatically."},
-  {t:"Freelancer who sets up proper Google Analytics 4 tracking for e-commerce", c:"Data", w:"GA4 is notoriously confusing. Set up the conversion events for them."},
-  {t:"Service that analyzes your customer churn data and tells you exactly why they leave", c:"Data", w:"Stop guessing why they cancelled. Dig into the exit survey data."},
-  {t:"Agency that builds custom data pipelines from Shopify to your accounting software", c:"Data", w:"Manual data entry is prone to errors. Automate the pipe."},
-  {t:"Tool that alerts you via SMS when your website traffic drops by more than 20%", c:"Data", w:"If an update tanks your SEO, you need to know today, not next month."},
-  {t:"Freelancer who extracts structured data from thousands of unstructured PDFs", c:"Data", w:"Lawyers and real estate agents drown in PDFs. Extract the text for them."},
-  {t:"Service that creates a visual map of where your most profitable customers live", c:"Data", w:"Geospatial data tells you exactly where to run your local ads next."},
-
-  // 43. SUPPORT
-  {t:"Agency that handles overflow customer support tickets during the holiday rush", c:"Support", w:"E-commerce teams break in November. Sell them temporary, trained help."},
-  {t:"Service that writes your entire company knowledge base from scratch", c:"Support", w:"Support volume drops by 40% if the FAQ actually answers the questions."},
-  {t:"Freelancer who audits your customer support emails and suggests empathy rewrites", c:"Support", w:"Your support team sounds robotic. Train them to sound like caring humans."},
-  {t:"Agency that provides 24/7 live chat support specifically for SaaS startups", c:"Support", w:"Startups can't hire night shifts. Outsource the graveyard shift to you."},
-  {t:"Tool that categorizes your support tickets to find the most common bugs", c:"Support", w:"Your inbox is a product roadmap. Use AI to extract the feature requests."},
-  {t:"Service that calls your angry customers to defuse the situation over the phone", c:"Support", w:"Emails escalate anger. A calm human voice diffuses it. Be the voice."},
-  {t:"Freelancer who sets up your Zendesk macros to save your team hours a week", c:"Support", w:"Typing the same answer twice is a waste of time. Build the templates."},
-  {t:"Agency that specializes in technical onboarding support for complex B2B tools", c:"Support", w:"Enterprise software is confusing. Handhold the clients so they don't churn."},
-  {t:"Tool that auto-replies to 'Where is my order?' emails with tracking links", c:"Support", w:"WISMO is 50% of e-commerce tickets. Automate it completely."},
-  {t:"Service that translates your help docs into 5 different languages", c:"Support", w:"Global users need native support. Translate the docs to reduce ticket volume."},
-
-  // 44. VIRTUAL ASSISTANTS
-  {t:"VA agency that strictly manages the chaotic email inboxes of creative directors", c:"Virtual Assistants", w:"Creatives are terrible at admin. Filter their inbox so they can just design."},
-  {t:"Specialized VA who only does deep-dive internet research for writers", c:"Virtual Assistants", w:"Authors spend hours looking up historical facts. Outsource the rabbit holes."},
-  {t:"Service that provides a dedicated VA to manage your personal calendar and flights", c:"Virtual Assistants", w:"Executives shouldn't be dealing with Delta customer service. The VA does it."},
-  {t:"VA agency specializing in data entry and lead scraping for sales teams", c:"Virtual Assistants", w:"SDRs should be on the phone, not copying and pasting from LinkedIn."},
-  {t:"Freelancer who acts as a 'gatekeeper' VA, filtering all inbound partnership requests", c:"Virtual Assistants", w:"Big creators get spammed. Filter out the trash and only surface the good deals."},
-  {t:"VA service that manages all your family appointments, from dentists to dog grooming", c:"Virtual Assistants", w:"Running a household is a part-time job. Offload the scheduling."},
-  {t:"Specialized VA who handles all the tedious formatting for your weekly newsletter", c:"Virtual Assistants", w:"Writing is fun. Fiddling with Mailchimp padding is awful. Outsource it."},
-  {t:"Agency providing VAs trained specifically in managing real estate listings", c:"Virtual Assistants", w:"Realtors need to be showing houses, not uploading photos to Zillow."},
-  {t:"VA who updates your CRM every Friday so you never have to look at it", c:"Virtual Assistants", w:"Sales reps hate CRM admin. Have someone else log the notes."},
-  {t:"Service that provides temporary VAs to cover for your full-time assistant's vacation", c:"Virtual Assistants", w:"When the assistant leaves, chaos ensues. Provide the stopgap coverage."},
-
-  // 45. LANDSCAPING
-  {t:"Niche service that designs and installs drought-resistant xeriscapes", c:"Landscaping", w:"Grass is expensive to water. Gravel and succulents are aesthetic and cheap."},
-  {t:"Agency that specializes entirely in organic, pesticide-free lawn care", c:"Landscaping", w:"Parents don't want their kids playing on chemicals. Sell natural alternatives."},
-  {t:"Freelancer who installs high-end outdoor lighting to make houses look expensive", c:"Landscaping", w:"Uplighting a tree costs $50 in parts and adds massive curb appeal at night."},
-  {t:"Service that builds custom raised garden beds for people who want to grow vegetables", c:"Landscaping", w:"People want to homestead but lack woodworking skills. Build the boxes."},
-  {t:"Niche landscaping crew that strictly deals with invasive plant removal (like bamboo)", c:"Landscaping", w:"Bamboo destroys foundations. Charge a massive premium to dig it all out."},
-  {t:"Agency that creates aesthetic, low-maintenance gravel patios for urban backyards", c:"Landscaping", w:"Pouring concrete is expensive. Laying down pea gravel and pavers is highly profitable."},
-  {t:"Service that power-washes and restains aging wooden decks right before summer", c:"Landscaping", w:"A gray, splintering deck looks terrible. Make it look brand new in one weekend."},
-  {t:"Freelancer who prunes and maintains expensive, decorative Japanese maple trees", c:"Landscaping", w:"Rich people will pay a specialist so the lawn guys don't butcher their expensive trees."},
-  {t:"Agency that installs and maintains automated drip irrigation systems for flower beds", c:"Landscaping", w:"Hand-watering takes too long. Run the tubes and automate the blooms."},
-  {t:"Service that cleans up suburban yards completely covered in autumn leaves", c:"Landscaping", w:"Raking sucks. Show up with massive backpack blowers and do it in 20 minutes."},
-
-  // 46. PARENTING
-  {t:"App that provides 5-minute, screen-free activities to distract toddlers", c:"Parenting", w:"When the meltdown hits, parents need an instant distraction that isn't an iPad."},
-  {t:"Service that baby-proofs your entire house before the newborn arrives", c:"Parenting", w:"New parents are exhausted. Install the cabinet locks and stair gates for them."},
-  {t:"Niche consultant who helps parents navigate the chaotic local preschool lottery", c:"Parenting", w:"Getting into a good preschool is harder than college. Guide them through it."},
-  {t:"Freelancer who organizes and purges outgrown baby clothes to sell online", c:"Parenting", w:"Kids outgrow clothes in 3 months. Take the bins, sell them, split the profit."},
-  {t:"App that connects local parents to set up low-stakes neighborhood playdates", c:"Parenting", w:"Parents are isolated. Make it easy to meet other people with 3-year-olds."},
-  {t:"Service that rents out high-end SNOO bassinets on a month-to-month basis", c:"Parenting", w:"A SNOO costs $1,700 and is used for 6 months. Renting is the only logical choice."},
-  {t:"Consultant who helps sleep-deprived parents sleep-train their babies gently", c:"Parenting", w:"Sleep deprivation is torture. Parents will pay anything for a full night of sleep."},
-  {t:"Tool that auto-syncs the school calendar, half-days, and events to your work calendar", c:"Parenting", w:"Surprise half-days ruin work schedules. Put it all on the calendar in September."},
-  {t:"Service that curates and delivers a week's worth of healthy, toddler-approved snacks", c:"Parenting", w:"Toddlers are picky. Take the mental load of snack prep off the parents."},
-  {t:"Agency that helps new parents set up 529 college savings plans without the jargon", c:"Parenting", w:"Financial planning for kids is overwhelming. Make it a simple, one-hour setup."},
-
-  // 47. MEAL PREP
-  {t:"Local service that preps all the ingredients for weeknight dinners, you just cook", c:"Meal Prep", w:"Chopping vegetables is the worst part of cooking. Deliver the mise en place."},
-  {t:"Agency that cooks and delivers hyper-specific macro meals for local bodybuilders", c:"Meal Prep", w:"Bodybuilders need exact protein numbers. Hit the macros, win the recurring customer."},
-  {t:"Niche meal prep service strictly for postpartum mothers needing nutrient-dense food", c:"Meal Prep", w:"New moms don't have time to cook. Deliver healing, iron-rich meals."},
-  {t:"Freelancer who comes to your house and batch-cooks 10 freezer meals for the month", c:"Meal Prep", w:"People want home-cooked food but don't want to do it. Cook in their kitchen."},
-  {t:"Service that delivers fresh, aesthetic charcuterie boards for Friday night house parties", c:"Meal Prep", w:"Hosting is stressful. Delivering a beautiful, ready-to-eat board solves the food problem."},
-  {t:"Local business making high-protein, zero-sugar baked goods for keto dieters", c:"Meal Prep", w:"Keto diets are restrictive. Sell them the illusion of eating brownies."},
-  {t:"Meal prep service that strictly uses ingredients from local farmers markets", c:"Meal Prep", w:"Farm-to-table is a massive selling point for health-conscious millennials."},
-  {t:"Agency providing daily lunch delivery specifically for small office teams", c:"Meal Prep", w:"Stop the team from debating where to order lunch every single day."},
-  {t:"Niche service creating gourmet, allergen-free meals for kids' school lunches", c:"Meal Prep", w:"Peanut allergies make packing lunch hard. Provide a safe, delicious alternative."},
-  {t:"Freelancer who creates custom, 30-day meal plans based on your bloodwork", c:"Meal Prep", w:"Generic diets fail. Eat exactly what your specific biology is lacking."},
-
-  // 48. CLEANING
-  {t:"Niche cleaning service that strictly does post-construction dust removal", c:"Cleaning", w:"Contractors leave fine drywall dust everywhere. Charge a premium to make it livable."},
-  {t:"Agency that does 'move-out' deep cleans so renters get their security deposits back", c:"Cleaning", w:"Renters are moving boxes; they don't want to scrub baseboards. Guarantee the deposit."},
-  {t:"Service that comes once a month just to deep-clean your oven, fridge, and baseboards", c:"Cleaning", w:"People can vacuum, but nobody wants to clean the oven. Unbundle the deep clean."},
-  {t:"Freelancer who organizes and cleans out chaotic suburban garages", c:"Cleaning", w:"Garages become hoarding zones. Haul the junk, sweep the floor, install shelves."},
-  {t:"Agency that sanitizes and cleans commercial gym equipment overnight", c:"Cleaning", w:"Gyms are breeding grounds for bacteria. Clean it while the members are sleeping."},
-  {t:"Service that cleans exterior house windows using water-fed poles from the ground", c:"Cleaning", w:"Window washing is high-margin if you use the right gear and stay off ladders."},
-  {t:"Niche crew that power-washes gross, stained driveways to boost curb appeal", c:"Cleaning", w:"A dirty driveway makes a house look cheap. Blast it clean in an hour."},
-  {t:"Agency specializing in eco-friendly, zero-chemical cleaning for homes with newborns", c:"Cleaning", w:"New parents are hyper-aware of toxins. Clean the house using only safe, natural products."},
-  {t:"Service that deep cleans and extracts smells from heavily used living room couches", c:"Cleaning", w:"Couches absorb sweat and dog smells. Use a commercial extractor to save the sofa."},
-  {t:"Freelancer who declutters your closet and takes the donations to Goodwill for you", c:"Cleaning", w:"The hardest part of cleaning the closet is actually driving to the donation center."},
-
-  // 49. AUTO DETAILING
-  {t:"Mobile detailing service that cleans office workers' cars in the corporate parking lot", c:"Auto Detailing", w:"People have money but no time. Clean their car while they are stuck in meetings."},
-  {t:"Niche detailing crew that strictly removes dog hair and smells from SUVs", c:"Auto Detailing", w:"Golden Retrievers destroy car interiors. Make hair removal your entire specialty."},
-  {t:"Service that restores cloudy, oxidized headlights to make used cars look brand new", c:"Auto Detailing", w:"Hazy headlights age a car by 5 years. Sand and polish them clear for $100."},
-  {t:"Freelancer who does high-end ceramic coatings in people's home garages", c:"Auto Detailing", w:"Ceramic coating protects the paint. Do it at their house so they don't lose their car for a day."},
-  {t:"Mobile service that strictly cleans and sanitizes messy minivans for busy parents", c:"Auto Detailing", w:"Crushed cheerios and spilled juice boxes. Charge a premium for the biohazard cleanup."},
-  {t:"Agency that preps cars specifically for high-end photos to sell on Bring a Trailer", c:"Auto Detailing", w:"A perfectly detailed classic car goes for $5k more at auction. Be the prep guy."},
-  {t:"Niche service fixing curb-rashed alloy wheels in customer driveways", c:"Auto Detailing", w:"People scrape their rims on curbs constantly. Sand, fill, and paint it on the spot."},
-  {t:"Freelancer who installs custom, aesthetic vinyl wraps on commercial fleet vehicles", c:"Auto Detailing", w:"Plumbers need their vans wrapped to look professional. Be the local wrapper."},
-  {t:"Service that removes terrible dealer decals and old bumper stickers without scratching", c:"Auto Detailing", w:"Nobody wants to drive a billboard for a dealership. Remove the stickers safely."},
-  {t:"Mobile business that strictly cleans and details motorcycles during the summer", c:"Auto Detailing", w:"Bikes have a lot of chrome that needs polishing. Detail them right before the weekend ride."},
-
-  // 50. CRAFTING
-  {t:"Store selling aesthetic, modern cross-stitch patterns based on pop culture memes", c:"Crafting", w:"Cross-stitch isn't just for grandmas anymore. Sell PDF patterns to Gen Z."},
-  {t:"Service that turns kids' messy drawings into custom, high-quality plush toys", c:"Crafting", w:"Parents love their kids' weird art. Bring the monster drawing to life."},
-  {t:"Niche business selling pre-cut, ready-to-assemble leather wallet kits", c:"Crafting", w:"People want to say they 'made it themselves' without buying leather-working tools."},
-  {t:"Freelancer who creates hyper-realistic custom action figures for collectors", c:"Crafting", w:"Nerd culture has deep pockets. Paint custom figures for their D&D campaigns."},
-  {t:"Store selling premium, hand-dyed yarn specifically for indie knitters", c:"Crafting", w:"Knitters will pay top dollar for unique, small-batch yarn colors."},
-  {t:"Service that frames your marathon medals in beautiful, modern shadow boxes", c:"Crafting", w:"People train for a year, get a medal, and throw it in a drawer. Frame the achievement."},
-  {t:"Business selling DIY pottery kits that you can air-dry at home", c:"Crafting", w:"Kilns are expensive. Sell the aesthetic, air-dry clay experience for a cozy night in."},
-  {t:"Niche store offering high-end, aesthetic concrete molds for home decor", c:"Crafting", w:"Brutalist concrete decor is trending. Sell the silicone molds so they can pour their own."},
-  {t:"Freelancer who custom-paints high-top sneakers for local influencers", c:"Crafting", w:"Custom sneakers are a massive flex. Paint their logo or aesthetic on a pair of Air Force 1s."},
-  {t:"Subscription box delivering a new, quick weekend DIY craft project every month", c:"Crafting", w:"Adults want to use their hands but don't want to shop for supplies. Deliver the project."}
-  ];
-const CATEGORIES = ['All', ...new Set(IDEAS.map(i => i.c))];
-let current = null;
-let saved = [];
-let activeCategory = 'All';
-let seen = new Set();
-
-function init() {
-  const bar = document.getElementById('filterBar');
-  CATEGORIES.forEach(cat => {
-    const btn = document.createElement('button');
-    btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
-    btn.textContent = cat;
-    btn.onclick = () => setCategory(cat, btn);
-    bar.appendChild(btn);
-  });
-}
-
-function setCategory(cat, el) {
-  activeCategory = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function generate() {
-  const card = document.getElementById('ideaCard');
-  card.classList.add('shuffling', 'active');
-  setTimeout(() => {
-    const pool = activeCategory === 'All' ? IDEAS : IDEAS.filter(i => i.c === activeCategory);
-    const unseen = pool.filter(i => !seen.has(i.t));
-    const source = unseen.length > 0 ? unseen : pool;
-    const idea = source[Math.floor(Math.random() * source.length)];
-    current = idea;
-    seen.add(idea.t);
-    document.getElementById('ideaTag').textContent = idea.c;
-    document.getElementById('ideaTitle').textContent = idea.t;
-    document.getElementById('ideaWhy').textContent = idea.w;
-    card.classList.remove('shuffling');
-  }, 140);
-}
-
-function saveIdea() {
-  if (!current) { showToast('Generate an idea first'); return; }
-  if (saved.find(i => i.t === current.t)) { showToast('Already saved'); return; }
-  saved.push(current);
-  document.getElementById('savedCount').textContent = saved.length;
-  renderSaved();
-  showToast('Saved');
-}
-
-function renderSaved() {
-  const sec = document.getElementById('savedSection');
-  const list = document.getElementById('savedList');
-  sec.classList.toggle('visible', saved.length > 0);
-  list.innerHTML = saved.map((idea, i) => `
-    <div class="saved-item">
-      <div class="saved-item-title">${idea.t}</div>
-      <div class="saved-meta">
-        <span class="saved-cat">${idea.c}</span>
-        <button class="btn-remove" onclick="removeIdea(${i})">✕</button>
-      </div>
-    </div>
-  `).join('');
-}
-
-function removeIdea(i) {
-  saved.splice(i, 1);
-  document.getElementById('savedCount').textContent = saved.length;
-  renderSaved();
-}
-
-function shareIdea() {
-  if (!current) { showToast('Generate an idea first'); return; }
-  const text = `💡 "${current.t}"\n\n${current.w}\n\nGet yours → trueleverageai.com`;
-  if (navigator.share) {
-    navigator.share({ text });
-  } else {
-    navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard'));
+    // Shuffle the deck
+    deck = deck.sort(() => Math.random() - 0.5);
+    
+    currentIndex = 0;
+    document.getElementById('inputArea').style.display = 'none';
+    document.getElementById('studyArea').style.display = 'block';
+    renderCard();
   }
-}
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2000);
-}
+  function renderCard() {
+    const card = document.getElementById('flashcard');
+    card.classList.remove('is-flipped'); // Always show front first
 
-init();
+    setTimeout(() => {
+      document.getElementById('cardFront').innerHTML = deck[currentIndex].front;
+      document.getElementById('cardBack').textContent = deck[currentIndex].back;
+      document.getElementById('cardCount').textContent = `Card ${currentIndex + 1} / ${deck.length}`;
+    }, 150); // Wait for flip animation to clear before changing text
+  }
+
+  function flipCard() {
+    document.getElementById('flashcard').classList.toggle('is-flipped');
+  }
+
+  function nextCard() {
+    if (currentIndex < deck.length - 1) {
+      currentIndex++;
+      renderCard();
+    } else {
+      alert("You finished the deck! Time to shuffle and restart.");
+      deck = deck.sort(() => Math.random() - 0.5);
+      currentIndex = 0;
+      renderCard();
+    }
+  }
+
+  function prevCard() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderCard();
+    }
+  }
+
+  function resetApp() {
+    document.getElementById('inputArea').style.display = 'block';
+    document.getElementById('studyArea').style.display = 'none';
+  }
 </script>
 </body>
 </html>

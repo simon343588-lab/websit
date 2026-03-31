@@ -924,7 +924,6 @@ const IDEAS = [
   {t:"Freelancer who custom-paints high-top sneakers for local influencers", c:"Crafting", w:"Custom sneakers are a massive flex. Paint their logo or aesthetic on a pair of Air Force 1s."},
   {t:"Subscription box delivering a new, quick weekend DIY craft project every month", c:"Crafting", w:"Adults want to use their hands but don't want to shop for supplies. Deliver the project."}
   ];
-;
 const CATEGORIES = ['All', ...new Set(IDEAS.map(i => i.c))];
 let current = null;
 let saved = [];
@@ -1012,7 +1011,7 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2000);
 }
 
-init();
+document.addEventListener("DOMContentLoaded", init);
 </script>
 </body>
 </html>

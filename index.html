@@ -18,354 +18,113 @@
     --red: #FF3B00;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--ink); font-family: 'Outfit', sans-serif; min-height: 100vh; position: relative; }
-  body::before {
-    content: ''; position: fixed; inset: 0;
-    background-image: radial-gradient(circle, #00000012 1px, transparent 1px);
-    background-size: 24px 24px; pointer-events: none; z-index: 0;
-  }
-  .wrap { position: relative; z-index: 1; }
-  header { padding: 28px 40px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--ink); }
-  .logo { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px; display: flex; align-items: center; gap: 10px; }
-  .logo-badge { background: var(--ink); color: var(--accent); font-family: 'Bebas Neue', sans-serif; font-size: 12px; letter-spacing: 2px; padding: 3px 10px; border-radius: 3px; }
-  .header-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; border: 1.5px solid var(--border); padding: 6px 14px; border-radius: 20px; }
-  .hero { padding: 64px 40px 48px; max-width: 900px; margin: 0 auto; text-align: center; }
-  .hero-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(52px, 9vw, 96px); letter-spacing: 2px; line-height: 0.95; margin-bottom: 20px; }
-  .hero h1 .hl { background: var(--ink); color: var(--accent); padding: 0 8px; display: inline-block; }
-  .hero p { font-size: 15px; color: var(--muted); max-width: 480px; margin: 0 auto; line-height: 1.7; }
-  .input-card { max-width: 680px; margin: 0 auto 80px; padding: 0 24px; }
-  .input-box { background: var(--card); border: 2px solid var(--ink); border-radius: 16px; overflow: hidden; box-shadow: 6px 6px 0 var(--ink); }
-  .input-inner { padding: 24px; }
-  .input-row { display: flex; border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--bg); }
-  .url-prefix { padding: 14px 14px 14px 16px; font-size: 13px; color: var(--muted); background: var(--bg); border-right: 1.5px solid var(--border); display: flex; align-items: center; }
-  input[type="text"] { flex: 1; background: transparent; border: none; padding: 14px 16px; color: var(--ink); font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500; outline: none; }
-  input[type="text"]::placeholder { color: #bbb; font-weight: 400; }
-  .divider { height: 1.5px; background: var(--border); margin: 16px 0; }
-  .options-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .opt-chip { font-size: 11px; font-weight: 600; padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); cursor: pointer; background: transparent; color: var(--muted); transition: all 0.15s; font-family: 'Outfit', sans-serif; }
-  .opt-chip:hover, .opt-chip.active { background: var(--ink); color: var(--accent); border-color: var(--ink); }
-  .audit-btn { width: 100%; background: var(--ink); color: var(--accent); border: none; padding: 16px; font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 10px; border-top: 2px solid var(--ink); }
-  .audit-btn:hover { background: #222; }
-  .audit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .error-msg { display: none; padding: 12px 16px; background: #FFF0EE; border-top: 1.5px solid var(--red); font-size: 12px; color: var(--red); font-weight: 500; }
-  .error-msg.show { display: block; }
-  .loading-wrap { display: none; max-width: 680px; margin: 0 auto 40px; padding: 0 24px; }
-  .loading-wrap.show { display: block; }
-  .loading-card { background: var(--card); border: 2px solid var(--ink); border-radius: 16px; padding: 28px; box-shadow: 6px 6px 0 var(--ink); }
-  .loading-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 2px; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
-  .spinner { width: 16px; height: 16px; border: 2.5px solid var(--border); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; flex-shrink: 0; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .steps-list { display: flex; flex-direction: column; gap: 10px; }
-  .step-row { display: flex; align-items: center; gap: 12px; font-size: 13px; color: #bbb; font-weight: 400; transition: color 0.3s; }
-  .step-row.active { color: var(--ink); font-weight: 600; }
-  .step-row.done { color: var(--green); }
-  .step-icon { font-size: 14px; width: 20px; text-align: center; }
-  #results { display: none; max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
-  #results.show { display: block; animation: fadeUp 0.5s ease; }
-  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-  .score-banner { background: var(--ink); color: white; border-radius: 16px; padding: 32px; margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
-  .banner-site { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #888; margin-bottom: 6px; }
-  .banner-title { font-family: 'Bebas Neue', sans-serif; font-size: 28px; letter-spacing: 2px; margin-bottom: 4px; }
-  .banner-verdict { font-size: 13px; color: #aaa; max-width: 420px; line-height: 1.6; }
-  .big-score { text-align: center; flex-shrink: 0; }
-  .big-score-num { font-family: 'Bebas Neue', sans-serif; font-size: 80px; line-height: 1; color: var(--accent); }
-  .big-score-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #666; margin-top: 2px; }
-  .score-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin-bottom: 20px; }
-  .score-card { background: var(--card); border: 2px solid var(--ink); border-radius: 14px; padding: 20px; box-shadow: 4px 4px 0 var(--ink); }
-  .sc-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-  .sc-score { font-family: 'Bebas Neue', sans-serif; font-size: 44px; line-height: 1; margin-bottom: 4px; }
-  .sc-score.good { color: var(--green); } .sc-score.ok { color: var(--yellow); } .sc-score.bad { color: var(--red); }
-  .sc-bar { height: 4px; border-radius: 2px; background: var(--border); margin-bottom: 10px; overflow: hidden; }
-  .sc-bar-fill { height: 100%; border-radius: 2px; }
-  .sc-bar-fill.good { background: var(--green); } .sc-bar-fill.ok { background: var(--yellow); } .sc-bar-fill.bad { background: var(--red); }
-  .sc-note { font-size: 11.5px; color: #666; line-height: 1.55; }
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
-  @media (max-width: 580px) { .two-col { grid-template-columns: 1fr; } }
-  .panel { background: var(--card); border: 2px solid var(--ink); border-radius: 14px; padding: 22px; box-shadow: 4px 4px 0 var(--ink); }
-  .panel-title { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .dot.red { background: var(--red); } .dot.green { background: var(--green); } .dot.yellow { background: var(--yellow); }
-  .item-list { display: flex; flex-direction: column; gap: 8px; }
-  .item-row { display: flex; gap: 10px; align-items: flex-start; font-size: 12.5px; line-height: 1.6; color: #444; }
-  .reset-btn { background: transparent; border: 2px solid var(--ink); padding: 12px 28px; font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 2px; cursor: pointer; border-radius: 8px; transition: all 0.15s; margin-top: 8px; }
-  .reset-btn:hover { background: var(--ink); color: var(--accent); }
-  @media (max-width: 600px) { header { padding: 20px; } .hero { padding: 40px 20px 32px; } .score-banner { flex-direction: column; text-align: center; } }
+  body { background: var(--bg); color: var(--ink); font-family: 'Outfit', sans-serif; min-height: 100vh; }
+  .wrap { position: relative; }
+  header { padding: 28px 40px; display: flex; justify-content: space-between; border-bottom: 2px solid var(--ink); }
+  .logo { font-family: 'Bebas Neue'; font-size: 26px; letter-spacing: 2px; }
+  .logo-badge { background: var(--ink); color: var(--accent); padding: 3px 10px; margin-left: 6px; }
+  .hero { padding: 60px 20px; text-align: center; }
+  .hero h1 { font-family: 'Bebas Neue'; font-size: 64px; }
+  .input-card { max-width: 600px; margin: auto; }
+  .input-box { border: 2px solid var(--ink); border-radius: 12px; background: white; }
+  input { width: 100%; padding: 14px; border: none; outline: none; }
+  .audit-btn { width: 100%; padding: 16px; background: var(--ink); color: var(--accent); border: none; cursor: pointer; }
+  .error-msg { display:none; color:red; padding:10px; }
+  .error-msg.show { display:block; }
+  #results { padding:20px; }
 </style>
 </head>
 <body>
+
 <div class="wrap">
-  <header>
-    <div class="logo">SiteAudit <span class="logo-badge">AI</span></div>
-    <div class="header-tag">Live AI fetch · No proxy</div>
-  </header>
 
-  <div class="hero">
-    <div class="hero-eyebrow">Website Analyzer</div>
-    <h1>YOUR SITE<br><span class="hl">BRUTALLY</span><br>AUDITED</h1>
-    <p>Paste any URL. AI fetches the live page itself, reads the real content, and scores your SEO, copy, structure and technical health.</p>
+<header>
+  <div class="logo">SiteAudit <span class="logo-badge">AI</span></div>
+</header>
+
+<div class="hero">
+  <h1>YOUR SITE BRUTALLY AUDITED</h1>
+</div>
+
+<div class="input-card">
+  <div class="input-box">
+    <input type="text" id="siteUrl" placeholder="Enter website URL"/>
+    <button class="audit-btn" id="auditBtn" onclick="runAudit()">Analyze Website</button>
+    <div class="error-msg" id="errorMsg"></div>
   </div>
+</div>
 
-  <div class="input-card">
-    <div class="input-box">
-      <div class="input-inner">
-        <div class="input-row">
-          <div class="url-prefix">🔗</div>
-          <input type="text" id="siteUrl" placeholder="yourwebsite.com or full URL" />
-        </div>
-        <div class="divider"></div>
-        <div class="options-row">
-          <span style="font-size:11px;font-weight:600;color:var(--muted);margin-right:4px">Focus:</span>
-          <button class="opt-chip active" data-focus="full">Full Audit</button>
-          <button class="opt-chip" data-focus="seo">SEO</button>
-          <button class="opt-chip" data-focus="copy">Copy & CTA</button>
-          <button class="opt-chip" data-focus="ux">UX & Structure</button>
-        </div>
-      </div>
-      <button class="audit-btn" id="auditBtn" onclick="runAudit()">⚡ ANALYZE WEBSITE</button>
-      <div class="error-msg" id="errorMsg"></div>
-    </div>
-  </div>
+<div id="results"></div>
 
-  <div class="loading-wrap" id="loadingWrap">
-    <div class="loading-card">
-      <div class="loading-title"><div class="spinner"></div><span>ANALYZING WEBSITE...</span></div>
-      <div class="steps-list">
-        <div class="step-row" id="ls1"><span class="step-icon">🌐</span> AI fetching live website</div>
-        <div class="step-row" id="ls2"><span class="step-icon">🔍</span> Reading SEO signals</div>
-        <div class="step-row" id="ls3"><span class="step-icon">📝</span> Analyzing copy & structure</div>
-        <div class="step-row" id="ls4"><span class="step-icon">🤖</span> Generating scored report</div>
-      </div>
-    </div>
-  </div>
-
-  <div id="results"></div>
 </div>
 
 <script>
-let activeFocus = 'full';
-
-document.querySelectorAll('.opt-chip').forEach(chip => {
-  chip.addEventListener('click', () => {
-    document.querySelectorAll('.opt-chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    activeFocus = chip.dataset.focus;
-  });
-});
-
-document.getElementById('siteUrl').addEventListener('keydown', e => {
-  if (e.key === 'Enter') runAudit();
-});
-
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-function setStep(n) {
-  for (let i = 1; i <= 4; i++) {
-    const el = document.getElementById('ls' + i);
-    el.className = 'step-row' + (i < n ? ' done' : i === n ? ' active' : '');
-  }
-}
-
-function sc(n) { return n >= 70 ? 'good' : n >= 40 ? 'ok' : 'bad'; }
-
 async function runAudit() {
-  const raw = document.getElementById('siteUrl').value.trim();
+  const urlInput = document.getElementById('siteUrl').value.trim();
   const errEl = document.getElementById('errorMsg');
+  const resultsEl = document.getElementById('results');
+
   errEl.className = 'error-msg';
+  resultsEl.innerHTML = '';
 
-  if (!raw) { errEl.textContent = 'Please enter a website URL.'; errEl.className = 'error-msg show'; return; }
+  if (!urlInput) {
+    errEl.textContent = 'Enter a URL';
+    errEl.className = 'error-msg show';
+    return;
+  }
 
-  let url = raw;
+  let url = urlInput;
   if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
-  try { new URL(url); } catch { errEl.textContent = 'Invalid URL. Try: example.com'; errEl.className = 'error-msg show'; return; }
 
-  const btn = document.getElementById('auditBtn');
-  btn.disabled = true;
-  document.getElementById('loadingWrap').className = 'loading-wrap show';
-  document.getElementById('results').className = '';
-  document.getElementById('results').innerHTML = '';
+  const API_KEY = 'AIzaSyCYaweJSr-A-_Bf33xPTGM6Rcu371aN7wE';
 
-  const GEMINI_KEY = 'AIzaSyCYaweJSr-A-_Bf33xPTGM6Rcu371aN7wE';
-
-  const focusMap = {
-    full: 'Perform a comprehensive audit covering SEO, copy quality, UX/structure, and technical health.',
-    seo: 'Focus on SEO: title tag, meta description, heading hierarchy, keywords, structured data, canonical.',
-    copy: 'Focus on copy quality, headline clarity, value proposition, and CTA effectiveness.',
-    ux: 'Focus on UX, page structure, mobile-readiness, navigation clarity, and conversion flow.'
-  };
-
-  // Step 1: Use Gemini's URL context — it fetches and reads the page natively
-  setStep(1);
-  await delay(400);
-  setStep(2);
-  await delay(400);
-  setStep(3);
-  await delay(400);
-  setStep(4);
-
-  const prompt = `You are an expert website auditor. Use Google Search to find and read the website: ${url}
-
-${focusMap[activeFocus]}
-
-Search for the site, read its real content, then give a specific audit based on what you actually find. Reference real headlines, copy, or missing elements.
-
-Respond ONLY with valid JSON. No markdown, no backticks, no preamble. All string values must be plain text under 120 chars:
-
-{
-  "overallScore": <0-100>,
-  "seoScore": <0-100>,
-  "copyScore": <0-100>,
-  "uxScore": <0-100>,
-  "techScore": <0-100>,
-  "seoNote": "<specific SEO finding>",
-  "copyNote": "<specific copy finding>",
-  "uxNote": "<specific UX finding>",
-  "techNote": "<specific technical finding>",
-  "verdict": "<3 sentences max. Brutally honest. Reference real things you saw.>",
-  "wins": ["<real win>", "<real win>"],
-  "issues": [
-    {"title": "<issue>", "detail": "<actionable fix>", "priority": "high"},
-    {"title": "<issue>", "detail": "<actionable fix>", "priority": "high"},
-    {"title": "<issue>", "detail": "<actionable fix>", "priority": "medium"},
-    {"title": "<issue>", "detail": "<actionable fix>", "priority": "low"}
-  ]
-}`;
+  const prompt = `Audit this website: ${url}
+Return JSON with scores, issues, wins.`;
 
   try {
+    const controller = new AbortController();
+    setTimeout(() => controller.abort(), 15000);
+
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
+        signal: controller.signal,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
           tools: [{ googleSearch: {} }],
-          generationConfig: { temperature: 0.3, maxOutputTokens: 1000 }
+          generationConfig: {
+            responseMimeType: "application/json"
+          }
         })
       }
     );
 
     const data = await res.json();
-    if (data.error) throw new Error(data.error.message || 'Gemini API error');
 
-    const allText = data.candidates?.[0]?.content?.parts?.map(p => p.text || '').join('') || '';
+    if (data.error) throw new Error(data.error.message);
 
-    // Robust JSON extraction and parsing
-    function extractJSON(text) {
-      const start = text.indexOf('{');
-      if (start === -1) return null;
-      let depth = 0;
-      for (let i = start; i < text.length; i++) {
-        if (text[i] === '{') depth++;
-        else if (text[i] === '}') { depth--; if (depth === 0) return text.slice(start, i + 1); }
-      }
-      return null;
-    }
+    const text = data.candidates[0].content.parts[0].text;
+    const audit = JSON.parse(text);
 
-    function sanitizeJSON(str) {
-      return str.replace(/[\u0000-\u001F\u007F]/g, c => {
-        const allowed = {'\n':'\\n','\r':'\\r','\t':'\\t'};
-        return allowed[c] || '';
-      });
-    }
-
-    const rawJSON = extractJSON(allText);
-    if (!rawJSON) throw new Error('Could not parse response. Try again.');
-    let audit;
-    try {
-      audit = JSON.parse(rawJSON);
-    } catch(e) {
-      try { audit = JSON.parse(sanitizeJSON(rawJSON)); }
-      catch(e2) { throw new Error('Response malformed. Please try again.'); }
-    }
-
-    document.getElementById('loadingWrap').className = 'loading-wrap';
-
-    const pi = { high: '🔴', medium: '🟡', low: '🟢' };
-    const domain = (() => { try { return new URL(url).hostname; } catch { return url; } })();
-
-    document.getElementById('results').innerHTML = `
-      <div class="score-banner">
-        <div>
-          <div class="banner-site">${domain}</div>
-          <div class="banner-title">AUDIT COMPLETE</div>
-          <div class="banner-verdict">${audit.verdict}</div>
-        </div>
-        <div class="big-score">
-          <div class="big-score-num">${audit.overallScore}</div>
-          <div class="big-score-label">Overall / 100</div>
-        </div>
-      </div>
-
-      <div class="score-grid">
-        ${[
-          ['SEO', audit.seoScore, audit.seoNote],
-          ['Copy & CTA', audit.copyScore, audit.copyNote],
-          ['UX & Structure', audit.uxScore, audit.uxNote],
-          ['Technical', audit.techScore, audit.techNote]
-        ].map(([l, s, n]) => `
-          <div class="score-card">
-            <div class="sc-label">${l}</div>
-            <div class="sc-score ${sc(s)}">${s}</div>
-            <div class="sc-bar"><div class="sc-bar-fill ${sc(s)}" style="width:${s}%"></div></div>
-            <div class="sc-note">${n}</div>
-          </div>
-        `).join('')}
-      </div>
-
-      <div class="two-col">
-        <div class="panel">
-          <div class="panel-title"><div class="dot green"></div>WHAT'S WORKING</div>
-          <div class="item-list">
-            ${(audit.wins || []).map(w => `<div class="item-row"><span style="flex-shrink:0">✓</span><span>${w}</span></div>`).join('')}
-          </div>
-        </div>
-        <div class="panel">
-          <div class="panel-title"><div class="dot red"></div>CRITICAL ISSUES</div>
-          <div class="item-list">
-            ${(audit.issues || []).filter(i => i.priority === 'high').map(i => `
-              <div class="item-row"><span style="flex-shrink:0">🔴</span><span><strong>${i.title}:</strong> ${i.detail}</span></div>
-            `).join('')}
-          </div>
-        </div>
-      </div>
-
-      <div class="panel" style="margin-bottom:14px">
-        <div class="panel-title"><div class="dot yellow"></div>ALL RECOMMENDATIONS</div>
-        <div class="item-list">
-          ${(audit.issues || []).map(i => `
-            <div class="item-row" style="padding:10px 0;border-bottom:1px solid #f0ede6">
-              <span style="flex-shrink:0;margin-top:2px">${pi[i.priority] || '🟢'}</span>
-              <span>
-                <strong style="font-size:13px;display:block;margin-bottom:2px">${i.title}</strong>
-                <span style="color:#888;font-size:12px">${i.detail}</span>
-              </span>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-
-      <button class="reset-btn" onclick="resetAudit()">↩ Audit another site</button>
+    resultsEl.innerHTML = `
+      <h2>Score: ${audit.overallScore}</h2>
+      <p>${audit.verdict}</p>
+      <h3>Wins</h3>
+      <ul>${(audit.wins||[]).map(w => `<li>${w}</li>`).join('')}</ul>
+      <h3>Issues</h3>
+      <ul>${(audit.issues||[]).map(i => `<li>${i.title} - ${i.detail}</li>`).join('')}</ul>
     `;
 
-    document.getElementById('results').className = 'show';
-    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-
   } catch (err) {
-    document.getElementById('loadingWrap').className = 'loading-wrap';
-    errEl.textContent = 'Error: ' + (err.message || 'Something went wrong. Try again.');
+    errEl.textContent = err.name === 'AbortError'
+      ? 'Request timeout'
+      : err.message;
     errEl.className = 'error-msg show';
   }
-
-  btn.disabled = false;
-}
-
-function resetAudit() {
-  document.getElementById('siteUrl').value = '';
-  document.getElementById('results').className = '';
-  document.getElementById('results').innerHTML = '';
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
+
 </body>
 </html>

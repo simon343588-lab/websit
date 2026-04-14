@@ -203,11 +203,11 @@ async function runAudit() {
   await delay(400);
   setStep(4);
 
-  const prompt = `You are an expert website auditor. Fetch and read the website at this URL: ${url}
+  const prompt = `You are an expert website auditor. Use Google Search to find and read the website: ${url}
 
 ${focusMap[activeFocus]}
 
-Visit the URL, read its real content, then give a specific audit based on what you actually find. Reference real headlines, copy, or missing elements.
+Search for the site, read its real content, then give a specific audit based on what you actually find. Reference real headlines, copy, or missing elements.
 
 Respond ONLY with valid JSON. No markdown, no backticks, no preamble. All string values must be plain text under 120 chars:
 
@@ -233,13 +233,13 @@ Respond ONLY with valid JSON. No markdown, no backticks, no preamble. All string
 
   try {
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ parts: [{ text: prompt }] }],
-          tools: [{ url_context: {} }],
+          tools: [{ googleSearch: {} }],
           generationConfig: { temperature: 0.3, maxOutputTokens: 1000 }
         })
       }

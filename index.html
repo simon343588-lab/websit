@@ -86,7 +86,7 @@ Return JSON with scores, issues, wins.`;
     setTimeout(() => controller.abort(), 15000);
 
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.0-flash:generateContent?key=${API_KEY}`,
       {
         method: 'POST',
         signal: controller.signal,
